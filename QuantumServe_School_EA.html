@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0f0a">
+  <title>QuantumServe School — East Africa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --bg:#0b0f0a;--bg2:#111710;--bg3:#182215;--bg4:#1f2b1a;--bg5:#26341f;
+  --green:#4caf50;--green2:#66bb6a;--green3:#a5d6a7;
+  --green-t:rgba(76,175,80,.12);--green-g:rgba(76,175,80,.05);
+  --lime:#8bc34a;--lime-t:rgba(139,195,74,.1);
+  --chalk:#f1ede4;--chalk2:rgba(241,237,228,.65);--chalk3:rgba(241,237,228,.35);--chalk4:rgba(241,237,228,.1);
+  --line:rgba(241,237,228,.07);--line2:rgba(76,175,80,.22);
+  --red:#ef5350;--red-t:rgba(239,83,80,.1);
+  --amber:#ffb300;--amber-t:rgba(255,179,0,.1);
+  --blue:#42a5f5;--blue-t:rgba(66,165,245,.1);
+  --purple:#ab47bc;--purple-t:rgba(171,71,188,.1);
+  --teal:#26c6da;--teal-t:rgba(38,198,218,.1);
+  --sidebar:258px;--topbar:60px;--r:10px;--r2:16px;
+  --spring:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{height:100%;scroll-behavior:smooth;}
+body{font-family:'Plus Jakarta Sans',-apple-system,sans-serif;background:var(--bg);color:var(--chalk);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;}
+input,select,textarea{font-family:inherit;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:4px;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.3;}
+
+/* ── Login ── */
+.screen{display:none;min-height:100vh;align-items:center;justify-content:center;padding:24px;}
+.screen.on{display:flex;flex-direction:column;}
+#sApp.on{flex-direction:row;align-items:flex-start;padding:0;}
+
+.login-bg{position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 80%,rgba(76,175,80,.12) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 20%,rgba(139,195,74,.07) 0%,transparent 50%);pointer-events:none;}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:48px 44px 40px;max-width:460px;width:100%;box-shadow:0 48px 96px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.025) inset;animation:cIn .65s var(--spring) both;}
+@keyframes cIn{from{opacity:0;transform:translateY(28px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+.ll{display:flex;flex-direction:column;align-items:center;margin-bottom:32px;}
+.ll-logo{width:72px;height:72px;border-radius:20px;background:linear-gradient(135deg,var(--green) 0%,#1b5e20 100%);display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:14px;border:1px solid var(--line2);box-shadow:0 0 40px rgba(76,175,80,.2);animation:gp 3.5s ease-in-out infinite;}
+@keyframes gp{0%,100%{box-shadow:0 0 24px rgba(76,175,80,.15);}50%{box-shadow:0 0 56px rgba(76,175,80,.3);}}
+.ll-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;}
+.ll-tag{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--green2);margin-top:4px;opacity:.85;}
+
+.ch{font-family:'Playfair Display',serif;font-size:26px;font-weight:600;text-align:center;margin-bottom:6px;}
+.cs{font-size:13px;color:var(--chalk3);text-align:center;margin-bottom:28px;font-weight:300;}
+
+.fld{margin-bottom:16px;}
+.fld label{display:block;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--chalk3);margin-bottom:6px;}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:13px 16px;font-size:14px;color:var(--chalk);outline:none;transition:border-color .2s;}
+.fld input:focus,.fld select:focus{border-color:var(--green);}
+.fld input::placeholder{color:var(--chalk4);}
+.fld select option{background:var(--bg3);}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:12px 20px;border-radius:var(--r);font-size:13px;font-weight:600;transition:opacity .2s,transform .15s;cursor:pointer;border:none;}
+.btn:hover{opacity:.84;transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.btn-g{background:linear-gradient(135deg,var(--green) 0%,#2e7d32 100%);color:#fff;}
+.btn-o{background:transparent;border:1px solid var(--line2);color:var(--chalk2);}
+.btn-o:hover{border-color:var(--green);color:var(--chalk);}
+.btn-ghost{background:var(--bg3);border:1px solid var(--line);color:var(--chalk3);}
+.btn-danger{background:var(--red-t);border:1px solid rgba(239,83,80,.2);color:var(--red);}
+.btn-full{width:100%;}
+.btn-sm{padding:6px 12px;font-size:11px;}
+
+.al{border-radius:var(--r);padding:12px 16px;font-size:13px;margin-top:14px;display:none;}
+.al.on{display:block;}
+.al-err{background:var(--red-t);border:1px solid rgba(239,83,80,.2);color:var(--red);}
+.al-ok{background:var(--green-t);border:1px solid rgba(76,175,80,.2);color:var(--green2);}
+.al-info{background:var(--green-g);border:1px solid var(--line2);color:var(--green3);}
+
+/* ── Sidebar ── */
+#sidebar{position:fixed;top:0;left:0;width:var(--sidebar);height:100vh;background:var(--bg2);border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:300;transition:transform .32s cubic-bezier(.4,0,.2,1);}
+.sb-top{padding:0 16px;height:var(--topbar);display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);flex-shrink:0;}
+.sb-logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--green),#1b5e20);display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid var(--line2);flex-shrink:0;}
+.sb-brand strong{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;display:block;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-brand span{font-size:9px;color:var(--green2);letter-spacing:.14em;text-transform:uppercase;font-weight:600;}
+nav{flex:1;overflow-y:auto;padding:8px;}
+.nsect{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk4);padding:14px 8px 6px;}
+.ni{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r);font-size:13px;font-weight:400;color:var(--chalk3);cursor:pointer;transition:background .15s,color .15s;position:relative;user-select:none;}
+.ni:hover{background:var(--bg3);color:var(--chalk2);}
+.ni.active{background:var(--green-t);color:var(--green2);font-weight:600;}
+.ni.active::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:2px;background:var(--green);border-radius:0 2px 2px 0;}
+.ni-icon{font-size:15px;width:20px;text-align:center;flex-shrink:0;}
+.sb-bot{padding:12px;border-top:1px solid var(--line);flex-shrink:0;}
+.sb-user{display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--r);background:var(--bg3);border:1px solid var(--line);}
+.sb-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--green),#2e7d32);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.sb-ui{flex:1;min-width:0;}
+.sb-un{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-ur{font-size:10px;color:var(--chalk3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sb-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);flex-shrink:0;}
+#sbOv{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:299;}
+
+/* ── Topbar ── */
+#topbar{position:fixed;top:0;left:var(--sidebar);right:0;height:var(--topbar);background:rgba(11,15,10,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 24px;gap:14px;z-index:200;}
+.tb-ham{display:none;color:var(--chalk3);font-size:20px;padding:4px;}
+.tb-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tb-right{display:flex;align-items:center;gap:10px;}
+.term-pill{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green2);white-space:nowrap;}
+.conn-pill{background:var(--bg3);border:1px solid var(--line);border-radius:50px;padding:5px 12px;font-size:11px;color:var(--chalk3);display:flex;align-items:center;gap:6px;}
+.conn-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);}
+.conn-dot.off{background:var(--red);box-shadow:0 0 5px var(--red);animation:bl 1s ease-in-out infinite;}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* ── Main ── */
+#main{margin-left:var(--sidebar);padding-top:var(--topbar);min-height:100vh;width:100%;}
+#module-container{padding:24px;}
+
+/* ── Panels / Cards ── */
+.panel{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;overflow:hidden;}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:20px 24px 16px;flex-wrap:wrap;}
+.ph-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;}
+.ph-sub{font-size:12px;color:var(--chalk3);margin-top:3px;font-weight:400;}
+.ph-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.ph2{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line);gap:12px;}
+.pt{font-size:14px;font-weight:600;}
+.pb{padding:0 0 4px;}
+
+/* ── Stats ── */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:16px;}
+.sc{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:18px 20px;transition:border-color .2s;}
+.sc:hover{border-color:var(--line2);}
+.sc-l{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--chalk3);margin-bottom:8px;}
+.sc-v{font-size:26px;font-weight:700;font-family:'Playfair Display',serif;line-height:1;}
+.sc-s{font-size:11px;color:var(--chalk3);margin-top:4px;}
+.sc-trend{font-size:11px;margin-top:6px;font-weight:600;}
+.sc-up{color:var(--green2);}
+.sc-dn{color:var(--red);}
+
+/* ── Tabs ── */
+.mod-tabs{display:flex;gap:4px;padding:0 20px 16px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:0;}
+.mtab{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;color:var(--chalk3);cursor:pointer;transition:all .15s;background:none;border:none;}
+.mtab:hover{background:var(--bg3);color:var(--chalk2);}
+.mtab.active{background:var(--green-t);color:var(--green2);}
+
+/* ── Table ── */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+thead tr{background:var(--bg3);}
+th{padding:10px 14px;text-align:left;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk3);white-space:nowrap;}
+td{padding:10px 14px;border-bottom:1px solid var(--line);color:var(--chalk2);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(76,175,80,.03);}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12px;}
+
+/* ── Badges ── */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:.04em;white-space:nowrap;}
+.bg{background:var(--green-t);color:var(--green2);border:1px solid rgba(76,175,80,.2);}
+.br{background:var(--red-t);color:var(--red);border:1px solid rgba(239,83,80,.2);}
+.ba{background:var(--amber-t);color:var(--amber);border:1px solid rgba(255,179,0,.2);}
+.bb{background:var(--blue-t);color:var(--blue);border:1px solid rgba(66,165,245,.2);}
+.bc{background:var(--chalk4);color:var(--chalk3);border:1px solid var(--line);}
+.bp{background:var(--purple-t);color:var(--purple);border:1px solid rgba(171,71,188,.2);}
+.bt{background:var(--teal-t);color:var(--teal);border:1px solid rgba(38,198,218,.2);}
+.bl2{background:var(--lime-t);color:var(--lime);border:1px solid rgba(139,195,74,.2);}
+
+/* ── Toast ── */
+#toastWrap{position:fixed;bottom:24px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:8px;pointer-events:none;}
+.toast{background:var(--bg4);border:1px solid var(--line);border-radius:var(--r);padding:12px 18px;font-size:13px;font-weight:500;transform:translateX(120%);transition:transform .35s var(--spring);max-width:320px;}
+.toast.on{transform:translateX(0);}
+.t-ok{border-color:rgba(76,175,80,.3);color:var(--green2);}
+.t-err{border-color:rgba(239,83,80,.3);color:var(--red);}
+.t-warn{border-color:rgba(255,179,0,.3);color:var(--amber);}
+.t-info{border-color:var(--line2);color:var(--green3);}
+
+/* ── Modal ── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto;}
+.modal{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:32px;max-width:600px;width:100%;max-height:90vh;overflow-y:auto;animation:cIn .4s var(--spring) both;}
+.modal-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:4px;}
+.modal-sub{font-size:12px;color:var(--chalk3);margin-bottom:24px;}
+.modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.modal-actions{display:flex;gap:10px;margin-top:24px;}
+.modal-actions .btn{flex:1;}
+
+/* ── Empty / Loading ── */
+.empty{text-align:center;padding:60px 20px;color:var(--chalk3);}
+.ei{font-size:48px;margin-bottom:12px;opacity:.5;}
+.empty p{font-size:13px;margin-top:6px;}
+.loading{display:flex;align-items:center;justify-content:center;gap:10px;padding:40px;color:var(--chalk3);font-size:13px;}
+.spinner{width:18px;height:18px;border:2px solid var(--line);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── Form helpers ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.col-full{grid-column:1/-1;}
+
+/* ── Responsive ── */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);box-shadow:12px 0 48px rgba(0,0,0,.7);}
+  #main{margin-left:0;}
+  #topbar{left:0;}
+  .tb-ham{display:block;}
+  #sbOv.on{display:block;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .form-grid,.modal-grid{grid-template-columns:1fr;}
+}
+
+/* ── Dashboard widgets ── */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:16px;}
+.widget{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);padding:20px;}
+.widget-title{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk3);margin-bottom:14px;}
+.wi-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;}
+.wi-row:last-child{border:none;}
+
+/* ── Progress bar ── */
+.prog-bar{background:var(--bg4);border-radius:4px;height:6px;margin-top:4px;}
+.prog-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--green),var(--green2));transition:width .5s var(--spring);}
+
+/* ── M-Pesa pill ── */
+.mpesa-badge{background:rgba(0,150,57,.15);border:1px solid rgba(0,150,57,.3);border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;color:#4caf50;letter-spacing:.04em;}
+.airtel-badge{background:rgba(220,38,38,.1);border:1px solid rgba(220,38,38,.25);border-radius:6px;padding:4px 10px;font-size:10px;font-weight:700;color:#ef5350;letter-spacing:.04em;}
+
+/* ── Fee status colours ── */
+.fee-paid{color:var(--green2);}
+.fee-partial{color:var(--amber);}
+.fee-unpaid{color:var(--red);}
+
+/* ── Exam grade colours ── */
+.grade-a{color:var(--green2);font-weight:700;}
+.grade-b{color:var(--lime);font-weight:600;}
+.grade-c{color:var(--amber);font-weight:600;}
+.grade-d{color:var(--red);font-weight:600;}
+
+/* ── School-specific page headers ── */
+.page-header{background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border:1px solid var(--line);border-radius:var(--r2);padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:20px;}
+.ph-icon{font-size:40px;flex-shrink:0;}
+.ph-info{}
+.ph-info h2{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;}
+.ph-info p{font-size:12px;color:var(--chalk3);margin-top:4px;}
+.ph-info .meta{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap;}
+.meta-tag{background:var(--bg4);border:1px solid var(--line);border-radius:6px;padding:3px 10px;font-size:10px;font-weight:600;color:var(--chalk3);}
+
+/* ── Announcement card ── */
+.announce-card{background:var(--bg3);border:1px solid var(--line2);border-radius:var(--r);padding:16px;margin-bottom:10px;}
+.ann-head{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.ann-type{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+.ann-date{font-size:11px;color:var(--chalk3);margin-left:auto;}
+.ann-body{font-size:13px;color:var(--chalk2);line-height:1.6;}
+
+/* ── Time table cell ── */
+.tt-grid{display:grid;grid-template-columns:80px repeat(5,1fr);gap:2px;font-size:11px;}
+.tt-head{background:var(--bg4);padding:8px;border-radius:4px;text-align:center;font-weight:700;color:var(--chalk3);}
+.tt-cell{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:8px 6px;text-align:center;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.tt-cell.math{border-color:rgba(66,165,245,.3);background:var(--blue-t);}
+.tt-cell.sci{border-color:rgba(76,175,80,.3);background:var(--green-t);}
+.tt-cell.eng{border-color:rgba(171,71,188,.3);background:var(--purple-t);}
+.tt-cell.sst{border-color:rgba(255,179,0,.3);background:var(--amber-t);}
+.tt-cell.ict{border-color:rgba(38,198,218,.3);background:var(--teal-t);}
+.tt-cell.break{background:var(--bg4);color:var(--chalk3);}
+.tt-subj{font-size:11px;font-weight:700;}
+.tt-teacher{font-size:9px;color:var(--chalk3);}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="screen on" id="sAuth">
+  <div class="login-bg"></div>
+  <div class="card">
+    <div class="ll">
+      <div class="ll-logo">🎓</div>
+      <div class="ll-name">QuantumServe School</div>
+      <div class="ll-tag">East Africa Edition · Uganda · Kenya · Tanzania</div>
+    </div>
+    <div class="ch">Welcome back</div>
+    <div class="cs">Sign in to your school management portal</div>
+    <div class="fld"><label>Email Address</label><input id="loginEmail" type="email" placeholder="admin@school.ac.ug" value="principal@stmaryskampala.ac.ug"></div>
+    <div class="fld"><label>Password</label><input id="loginPass" type="password" placeholder="••••••••" value="demo123"></div>
+    <div class="fld">
+      <label>School / Role</label>
+      <select id="demoRole">
+        <option value="principal">Principal — St. Mary's Kampala</option>
+        <option value="bursar">Bursar — Fees & Finance</option>
+        <option value="registrar">Academic Registrar</option>
+        <option value="teacher">Class Teacher</option>
+        <option value="dos">Director of Studies</option>
+        <option value="admin">System Administrator</option>
+      </select>
+    </div>
+    <div class="al al-info on">🌍 Demo mode · No backend required · All data is sample East Africa school data</div>
+    <div id="loginErr" class="al al-err"></div>
+    <button class="btn btn-g btn-full" onclick="doLogin()" style="margin-top:20px;">Sign In →</button>
+    <div style="text-align:center;margin-top:20px;font-size:11px;color:var(--chalk3);">QuantumServe School v2.0 · Supports UGX · KES · TZS · RWF · M-Pesa · Airtel Money</div>
+  </div>
+</div>
+
+<!-- APP SHELL -->
+<div class="screen" id="sApp">
+  <aside id="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo">🎓</div>
+      <div class="sb-brand">
+        <strong id="sbSchoolName">St. Mary's</strong>
+        <span>School Management</span>
+      </div>
+    </div>
+    <nav id="nav"></nav>
+    <div class="sb-bot">
+      <div class="sb-user">
+        <div class="sb-av" id="sbAv">P</div>
+        <div class="sb-ui">
+          <div class="sb-un" id="sbName">Principal</div>
+          <div class="sb-ur" id="sbRole">Administrator</div>
+        </div>
+        <div class="sb-dot"></div>
+      </div>
+      <button class="btn btn-ghost btn-full" onclick="doLogout()" style="margin-top:8px;font-size:11px;">Sign Out</button>
+    </div>
+  </aside>
+  <div id="sbOv" onclick="closeSidebar()"></div>
+
+  <div id="topbar">
+    <button class="tb-ham" onclick="openSidebar()">☰</button>
+    <div class="tb-title" id="tbTitle">Dashboard</div>
+    <div class="tb-right">
+      <div class="term-pill" id="tbTerm">Term 2 · 2025</div>
+      <div class="conn-pill"><div class="conn-dot"></div><span>Live</span></div>
+      <button class="btn btn-g btn-sm" onclick="showQuickNotice()">📢 Notice</button>
+    </div>
+  </div>
+
+  <main id="main"><div id="module-container"><div class="loading"><div class="spinner"></div>Loading…</div></div></main>
+</div>
+
+<div id="toastWrap"></div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────
+const APP = {
+  role: 'principal',
+  user: { name: 'Dr. Sarah Namukasa', initials: 'SN', email: 'principal@stmaryskampala.ac.ug' },
+  school: { name: "St. Mary's College Kampala", short: "St. Mary's", country: 'Uganda', currency: 'UGX', term: 'Term 2', year: '2025', type: 'Secondary' },
+  currentPage: 'dashboard',
+};
+
+// ── Demo Data ─────────────────────────────────────────────────
+const DATA = {
+  students: [
+    {id:'S001',name:'Aisha Nalubega',class:'S.4A',gender:'F',term_fee:850000,paid:850000,status:'Paid',stream:'Sciences',district:'Kampala',dob:'2008-03-14',parent:'Grace Nalubega',phone:'+256 772 123 456',guardian_rel:'Mother',boarding:'Day',admit:'2021-02-01',nat_id:'CF28100123456DE'},
+    {id:'S002',name:'Brian Ochieng',class:'S.6B',gender:'M',term_fee:950000,paid:600000,status:'Partial',stream:'Arts',district:'Jinja',dob:'2006-07-22',parent:'James Ochieng',phone:'+256 701 987 654',guardian_rel:'Father',boarding:'Boarding',admit:'2019-02-01',nat_id:'CM26070223456KE'},
+    {id:'S003',name:'Cynthia Mwangi',class:'S.2C',gender:'F',term_fee:750000,paid:0,status:'Unpaid',stream:'Sciences',district:'Nairobi',dob:'2010-11-05',parent:'Peter Mwangi',phone:'+254 722 345 678',guardian_rel:'Father',boarding:'Day',admit:'2023-02-01',nat_id:'CF20110534567KE'},
+    {id:'S004',name:'David Kasozi',class:'S.4A',gender:'M',term_fee:850000,paid:850000,status:'Paid',stream:'Sciences',district:'Wakiso',dob:'2008-05-30',parent:'Ruth Kasozi',phone:'+256 782 456 789',guardian_rel:'Mother',boarding:'Day',admit:'2021-02-01',nat_id:'CM28050634567UG'},
+    {id:'S005',name:'Esther Wangari',class:'S.3B',gender:'F',term_fee:800000,paid:800000,status:'Paid',stream:'Commerce',district:'Mbarara',dob:'2009-02-18',parent:'John Wangari',phone:'+256 755 567 890',guardian_rel:'Father',boarding:'Boarding',admit:'2022-02-01',nat_id:'CF29020734567UG'},
+    {id:'S006',name:'Francis Tumwesigye',class:'S.6A',gender:'M',term_fee:950000,paid:400000,status:'Partial',stream:'Sciences',district:'Bushenyi',dob:'2006-09-12',parent:'Mary Tumwesigye',phone:'+256 705 678 901',guardian_rel:'Mother',boarding:'Boarding',admit:'2019-02-01',nat_id:'CM26090823456UG'},
+    {id:'S007',name:'Grace Auma',class:'S.1A',gender:'F',term_fee:700000,paid:700000,status:'Paid',stream:'Mixed',district:'Gulu',dob:'2011-04-25',parent:'Peter Auma',phone:'+256 789 789 012',guardian_rel:'Father',boarding:'Day',admit:'2024-02-01',nat_id:'CF21040923456UG'},
+    {id:'S008',name:'Hassan Nkurunziza',class:'S.5C',gender:'M',term_fee:900000,paid:0,status:'Unpaid',stream:'Arts',district:'Kabale',dob:'2007-12-03',parent:'Fatuma Nkurunziza',phone:'+256 712 890 123',guardian_rel:'Mother',boarding:'Boarding',admit:'2020-02-01',nat_id:'CM27121034567UG'},
+    {id:'S009',name:'Immaculate Atim',class:'S.2A',gender:'F',term_fee:750000,paid:750000,status:'Paid',stream:'Sciences',district:'Lira',dob:'2010-06-16',parent:'Charles Atim',phone:'+256 776 901 234',guardian_rel:'Father',boarding:'Day',admit:'2023-02-01',nat_id:'CF20061134567UG'},
+    {id:'S010',name:'Joseph Kiprotich',class:'S.4B',gender:'M',term_fee:850000,paid:850000,status:'Paid',stream:'Sciences',district:'Nairobi',dob:'2008-08-20',parent:'Susan Kiprotich',phone:'+254 733 012 345',guardian_rel:'Mother',boarding:'Boarding',admit:'2021-02-01',nat_id:'CM28081234567KE'},
+  ],
+  staff: [
+    {id:'T001',name:'Mr. Robert Kiggundu',subject:'Mathematics',class:'S.4A,S.6A',type:'Teaching',qual:'B.Ed Makerere',salary:1200000,status:'Active',phone:'+256 772 111 222',joined:'2018-02-01'},
+    {id:'T002',name:'Mrs. Agnes Nalwanga',subject:'English Language',class:'S.1,S.2,S.3',type:'Teaching',qual:'B.A. Makerere',salary:1050000,status:'Active',phone:'+256 701 222 333',joined:'2015-02-01'},
+    {id:'T003',name:'Mr. Peter Muthama',subject:'Biology & Chemistry',class:'S.5,S.6',type:'Teaching',qual:'B.Sc. Nairobi',salary:1150000,status:'Active',phone:'+254 722 333 444',joined:'2019-06-01'},
+    {id:'T004',name:'Ms. Patience Achieng',subject:'History & CRE',class:'S.3,S.4,S.5',type:'Teaching',qual:'B.Ed Kyambogo',salary:980000,status:'Active',phone:'+256 755 444 555',joined:'2020-02-01'},
+    {id:'T005',name:'Mr. Isaac Byaruhanga',subject:'Physics',class:'S.4A,S.5A,S.6A',type:'Teaching',qual:'B.Sc. Mbarara',salary:1100000,status:'Active',phone:'+256 705 555 666',joined:'2017-02-01'},
+    {id:'T006',name:'Mrs. Dorcas Mwangi',subject:'Geography',class:'S.2,S.3',type:'Teaching',qual:'B.A. Nairobi',salary:990000,status:'Active',phone:'+254 711 666 777',joined:'2021-02-01'},
+    {id:'T007',name:'Mr. Emmanuel Ssemanda',subject:'ICT',class:'S.1,S.2,S.3,S.4',type:'Teaching',qual:'B.Sc.IT Makerere',salary:1180000,status:'Active',phone:'+256 789 777 888',joined:'2016-02-01'},
+    {id:'T008',name:'Ms. Florence Nakawunde',subject:'Bursar / Accounts',class:'Admin',type:'Non-Teaching',qual:'ACCA Part II',salary:1800000,status:'Active',phone:'+256 712 888 999',joined:'2014-02-01'},
+    {id:'T009',name:'Mr. Julius Okello',subject:'Games & PE',class:'All',type:'Teaching',qual:'Diploma Kyambogo',salary:900000,status:'Leave',phone:'+256 776 999 000',joined:'2019-02-01'},
+    {id:'T010',name:'Mrs. Rebecca Nakato',subject:'Home Economics',class:'S.1,S.2',type:'Teaching',qual:'B.Ed Makerere',salary:960000,status:'Active',phone:'+256 782 000 111',joined:'2022-02-01'},
+  ],
+  fees: [
+    {id:'F001',student:'Aisha Nalubega',class:'S.4A',term_fee:850000,paid:850000,balance:0,last_pay:'2025-02-14',method:'M-Pesa',ref:'MP240214001',status:'Paid'},
+    {id:'F002',student:'Brian Ochieng',class:'S.6B',term_fee:950000,paid:600000,balance:350000,last_pay:'2025-02-28',method:'Bank',ref:'STD240228002',status:'Partial'},
+    {id:'F003',student:'Cynthia Mwangi',class:'S.2C',term_fee:750000,paid:0,balance:750000,last_pay:null,method:null,ref:null,status:'Unpaid'},
+    {id:'F004',student:'David Kasozi',class:'S.4A',term_fee:850000,paid:850000,balance:0,last_pay:'2025-02-10',method:'Airtel',ref:'AM240210004',status:'Paid'},
+    {id:'F005',student:'Esther Wangari',class:'S.3B',term_fee:800000,paid:800000,balance:0,last_pay:'2025-02-15',method:'M-Pesa',ref:'MP240215005',status:'Paid'},
+    {id:'F006',student:'Francis Tumwesigye',class:'S.6A',term_fee:950000,paid:400000,balance:550000,last_pay:'2025-03-01',method:'Bank',ref:'STD240301006',status:'Partial'},
+    {id:'F007',student:'Grace Auma',class:'S.1A',term_fee:700000,paid:700000,balance:0,last_pay:'2025-02-08',method:'M-Pesa',ref:'MP240208007',status:'Paid'},
+    {id:'F008',student:'Hassan Nkurunziza',class:'S.5C',term_fee:900000,paid:0,balance:900000,last_pay:null,method:null,ref:null,status:'Unpaid'},
+    {id:'F009',student:'Immaculate Atim',class:'S.2A',term_fee:750000,paid:750000,balance:0,last_pay:'2025-02-20',method:'Airtel',ref:'AM240220009',status:'Paid'},
+    {id:'F010',student:'Joseph Kiprotich',class:'S.4B',term_fee:850000,paid:850000,balance:0,last_pay:'2025-02-12',method:'M-Pesa',ref:'MP240212010',status:'Paid'},
+  ],
+  exams: [
+    {id:'E001',student:'Aisha Nalubega',class:'S.4A',subject:'Mathematics',score:82,grade:'B2',exam:'Mid-Term 2025',teacher:'Mr. Kiggundu',remarks:'Excellent'},
+    {id:'E002',student:'Aisha Nalubega',class:'S.4A',subject:'English',score:76,grade:'B3',exam:'Mid-Term 2025',teacher:'Mrs. Nalwanga',remarks:'Good'},
+    {id:'E003',student:'Brian Ochieng',class:'S.6B',subject:'History',score:90,grade:'D1',exam:'Mid-Term 2025',teacher:'Ms. Achieng',remarks:'Outstanding'},
+    {id:'E004',student:'Brian Ochieng',class:'S.6B',subject:'English',score:85,grade:'B2',exam:'Mid-Term 2025',teacher:'Mrs. Nalwanga',remarks:'Very Good'},
+    {id:'E005',student:'David Kasozi',class:'S.4A',subject:'Physics',score:88,grade:'D1',exam:'Mid-Term 2025',teacher:'Mr. Byaruhanga',remarks:'Outstanding'},
+    {id:'E006',student:'Esther Wangari',class:'S.3B',subject:'Geography',score:71,grade:'C3',exam:'Mid-Term 2025',teacher:'Mrs. Mwangi',remarks:'Average'},
+    {id:'E007',student:'Grace Auma',class:'S.1A',subject:'Mathematics',score:65,grade:'C4',exam:'Mid-Term 2025',teacher:'Mr. Kiggundu',remarks:'Fair'},
+    {id:'E008',student:'Hassan Nkurunziza',class:'S.5C',subject:'History',score:55,grade:'P7',exam:'Mid-Term 2025',teacher:'Ms. Achieng',remarks:'Needs Improvement'},
+    {id:'E009',student:'Joseph Kiprotich',class:'S.4B',subject:'Biology',score:91,grade:'D1',exam:'Mid-Term 2025',teacher:'Mr. Muthama',remarks:'Exceptional'},
+    {id:'E010',student:'Cynthia Mwangi',class:'S.2C',subject:'English',score:79,grade:'B3',exam:'Mid-Term 2025',teacher:'Mrs. Nalwanga',remarks:'Good'},
+  ],
+  notices: [
+    {id:'N001',title:'End of Term Exams Schedule',type:'Academic',date:'2025-04-28',priority:'High',body:'End of term examinations will commence on 12th May 2025. All students must clear fees before sitting exams. Timetable posted on the notice board.'},
+    {id:'N002',title:'UNEB Mock Results Released',type:'Examination',date:'2025-04-25',priority:'High',body:'UCE and UACE Mock results are now available. Students who scored below 50% in any subject must report for remedial classes starting Monday 28th April.'},
+    {id:'N003',title:'Parent-Teacher Meeting',type:'General',date:'2025-04-22',priority:'Medium',body:'Parent-Teacher meeting scheduled for Saturday 3rd May 2025 at 9:00 AM. All class teachers must be present. Parents encouraged to attend.'},
+    {id:'N004',title:'Inter-House Sports Day',type:'Sports',date:'2025-04-20',priority:'Low',body:'Annual Inter-House Sports Day will be held on 30th May 2025. Registration for athletics events closes 10th May. All students encouraged to participate.'},
+    {id:'N005',title:'Ministry of Education Inspection',type:'Administrative',date:'2025-04-18',priority:'High',body:'The Ministry of Education and Sports inspection team will visit on 7th May 2025. All departments must prepare their records and ensure classrooms are clean.'},
+  ],
+  classes: [
+    {id:'C001',name:'S.1A',stream:'Mixed',teacher:'Mrs. Nalwanga',students:42,room:'Room 101',capacity:45},
+    {id:'C002',name:'S.2A',stream:'Sciences',teacher:'Mr. Kiggundu',students:38,room:'Room 102',capacity:45},
+    {id:'C003',name:'S.2C',stream:'Arts',teacher:'Mrs. Mwangi',students:40,room:'Room 103',capacity:45},
+    {id:'C004',name:'S.3B',stream:'Commerce',teacher:'Ms. Achieng',students:36,room:'Room 201',capacity:45},
+    {id:'C005',name:'S.4A',stream:'Sciences',teacher:'Mr. Byaruhanga',students:35,room:'Room 202',capacity:40},
+    {id:'C006',name:'S.4B',stream:'Sciences',teacher:'Mr. Muthama',students:33,room:'Lab 1',capacity:38},
+    {id:'C007',name:'S.5A',stream:'Sciences',teacher:'Mr. Ssemanda',students:28,room:'Room 301',capacity:35},
+    {id:'C008',name:'S.5C',stream:'Arts',teacher:'Ms. Achieng',students:30,room:'Room 302',capacity:35},
+    {id:'C009',name:'S.6A',stream:'Sciences',teacher:'Mr. Byaruhanga',students:25,room:'Room 303',capacity:30},
+    {id:'C010',name:'S.6B',stream:'Arts',teacher:'Mrs. Nakato',students:22,room:'Room 304',capacity:30},
+  ],
+  inventory: [
+    {id:'I001',item:'Exercise Books (A4 Ruled)',category:'Stationery',qty:1840,unit:'pieces',reorder:500,supplier:'Crane Stationery Kampala',cost_unit:800,last_restock:'2025-01-15'},
+    {id:'I002',item:'Chalk (White)',category:'Teaching Aids',qty:24,unit:'boxes',reorder:10,supplier:'Local Supplier',cost_unit:5000,last_restock:'2025-04-01'},
+    {id:'I003',item:'Scientific Calculators',category:'Equipment',qty:35,unit:'pieces',reorder:10,supplier:'Imperial Electronics',cost_unit:45000,last_restock:'2024-09-01'},
+    {id:'I004',item:'Laboratory Chemicals Kit',category:'Science',qty:4,unit:'sets',reorder:2,supplier:'Kampala Chemicals Ltd',cost_unit:280000,last_restock:'2024-08-01'},
+    {id:'I005',item:'Sports Equipment (Balls)',category:'Sports',qty:18,unit:'pieces',reorder:5,supplier:'Sports House Uganda',cost_unit:35000,last_restock:'2025-02-01'},
+    {id:'I006',item:'Printer Paper (A4 Ream)',category:'Stationery',qty:12,unit:'reams',reorder:5,supplier:'Crane Stationery',cost_unit:22000,last_restock:'2025-03-20'},
+    {id:'I007',item:'Textbooks O-Level Math',category:'Books',qty:68,unit:'copies',reorder:20,supplier:'Longhorn Publishers UG',cost_unit:18000,last_restock:'2025-01-10'},
+    {id:'I008',item:'Computer Mice',category:'ICT',qty:6,unit:'pieces',reorder:5,supplier:'Comtech Uganda',cost_unit:25000,last_restock:'2024-11-01'},
+  ],
+  transactions: [
+    {id:'TX001',date:'2025-04-28',desc:'Fees Collection — M-Pesa',amount:2850000,type:'Income',category:'School Fees',ref:'MP-BATCH-042025'},
+    {id:'TX002',date:'2025-04-25',desc:'Teacher Salaries — April',amount:-12800000,type:'Expense',category:'Salaries',ref:'PAY-APR-2025'},
+    {id:'TX003',date:'2025-04-20',desc:'NWSC Water Bill',amount:-185000,type:'Expense',category:'Utilities',ref:'NWSC-APR25'},
+    {id:'TX004',date:'2025-04-18',desc:'Ugandan Electricity — UMEME',amount:-340000,type:'Expense',category:'Utilities',ref:'UMEME-APR25'},
+    {id:'TX005',date:'2025-04-15',desc:'Stationery Purchase — Crane',amount:-456000,type:'Expense',category:'Supplies',ref:'CRANE-0415'},
+    {id:'TX006',date:'2025-04-12',desc:'Boarding Fees Collection',amount:4200000,type:'Income',category:'Boarding',ref:'BOARD-T2-2025'},
+    {id:'TX007',date:'2025-04-10',desc:'UNEB Registration Fees — S.4 & S.6',amount:-980000,type:'Expense',category:'Examinations',ref:'UNEB-REG-2025'},
+    {id:'TX008',date:'2025-04-05',desc:'Government Capitation Grant',amount:3500000,type:'Income',category:'Government Grant',ref:'MoES-CAP-T2'},
+    {id:'TX009',date:'2025-04-02',desc:'Maintenance — Roofing Repair',amount:-620000,type:'Expense',category:'Maintenance',ref:'MAINT-0402'},
+    {id:'TX010',date:'2025-03-28',desc:'Airtel Money Fees Collection',amount:1950000,type:'Income',category:'School Fees',ref:'AM-BATCH-032025'},
+  ],
+};
+
+// ── Utilities ─────────────────────────────────────────────────
+const fm = v => Number(v||0).toLocaleString('en-UG');
+const fmUGX = v => 'UGX ' + fm(v);
+const fd = v => { if(!v) return '—'; return new Date(v).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); };
+function cap(s){ return s ? s.charAt(0).toUpperCase()+s.slice(1) : ''; }
+function toast(msg, type='ok', dur=3500){
+  const tw = document.getElementById('toastWrap'); if(!tw) return;
+  const t = document.createElement('div'); t.className = `toast t-${type}`; t.textContent = msg;
+  tw.appendChild(t); requestAnimationFrame(()=>t.classList.add('on'));
+  setTimeout(()=>{ t.classList.remove('on'); setTimeout(()=>t.remove(),400); }, dur);
+}
+function sb(s){
+  const m={Paid:'bg',Partial:'ba',Unpaid:'br',Active:'bg',Leave:'ba',Terminated:'br',Draft:'bc',Posted:'bg',Approved:'bg',Rejected:'br',Pending:'ba','In Progress':'bp',High:'br',Medium:'ba',Low:'bc',Teaching:'bl2','Non-Teaching':'bc',Boarding:'bt',Day:'bc'};
+  return `<span class="badge ${m[s]||'bc'}">${s||'—'}</span>`;
+}
+function gradeClass(g){
+  if(['D1','D2'].includes(g)) return 'grade-a';
+  if(['C3','C4','C5','C6'].includes(g)) return 'grade-b';
+  if(['P7','P8'].includes(g)) return 'grade-c';
+  return 'grade-d';
+}
+function payBadge(m){
+  if(m==='M-Pesa') return '<span class="mpesa-badge">M-Pesa</span>';
+  if(m==='Airtel') return '<span class="airtel-badge">Airtel</span>';
+  return `<span class="badge bc">${m||'—'}</span>`;
+}
+
+// ── Navigation config ─────────────────────────────────────────
+const NAV_BY_ROLE = {
+  principal: [
+    { sect:'Overview', items:[
+      {page:'dashboard', icon:'🏠', label:'Dashboard'},
+      {page:'notices', icon:'📢', label:'Notices & Circulars'},
+    ]},
+    { sect:'Academic', items:[
+      {page:'students', icon:'👩‍🎓', label:'Students'},
+      {page:'classes', icon:'🏫', label:'Classes & Streams'},
+      {page:'exams', icon:'📝', label:'Examinations'},
+      {page:'timetable', icon:'🗓️', label:'Timetable'},
+    ]},
+    { sect:'Administration', items:[
+      {page:'staff', icon:'👔', label:'Staff & HR'},
+      {page:'fees', icon:'💰', label:'Fees & Payments'},
+      {page:'finance', icon:'📊', label:'Finance'},
+      {page:'inventory', icon:'📦', label:'Inventory'},
+    ]},
+    { sect:'System', items:[
+      {page:'reports', icon:'📋', label:'Reports'},
+      {page:'settings', icon:'⚙️', label:'Settings'},
+    ]},
+  ],
+  bursar: [
+    { sect:'Finance', items:[
+      {page:'fees', icon:'💰', label:'Fees & Payments'},
+      {page:'finance', icon:'📊', label:'Finance'},
+      {page:'reports', icon:'📋', label:'Reports'},
+    ]},
+  ],
+  registrar: [
+    { sect:'Academic', items:[
+      {page:'students', icon:'👩‍🎓', label:'Students'},
+      {page:'classes', icon:'🏫', label:'Classes & Streams'},
+      {page:'exams', icon:'📝', label:'Examinations'},
+      {page:'notices', icon:'📢', label:'Notices'},
+    ]},
+  ],
+  teacher: [
+    { sect:'Classroom', items:[
+      {page:'students', icon:'👩‍🎓', label:'My Students'},
+      {page:'exams', icon:'📝', label:'Exams & Marks'},
+      {page:'timetable', icon:'🗓️', label:'Timetable'},
+      {page:'notices', icon:'📢', label:'Notices'},
+    ]},
+  ],
+  dos: [
+    { sect:'Academic', items:[
+      {page:'dashboard', icon:'🏠', label:'Dashboard'},
+      {page:'students', icon:'👩‍🎓', label:'Students'},
+      {page:'classes', icon:'🏫', label:'Classes & Streams'},
+      {page:'exams', icon:'📝', label:'Examinations'},
+      {page:'timetable', icon:'🗓️', label:'Timetable'},
+      {page:'reports', icon:'📋', label:'Reports'},
+    ]},
+  ],
+  admin: [
+    { sect:'All Modules', items:[
+      {page:'dashboard', icon:'🏠', label:'Dashboard'},
+      {page:'students', icon:'👩‍🎓', label:'Students'},
+      {page:'staff', icon:'👔', label:'Staff & HR'},
+      {page:'fees', icon:'💰', label:'Fees & Payments'},
+      {page:'finance', icon:'📊', label:'Finance'},
+      {page:'exams', icon:'📝', label:'Examinations'},
+      {page:'classes', icon:'🏫', label:'Classes'},
+      {page:'inventory', icon:'📦', label:'Inventory'},
+      {page:'notices', icon:'📢', label:'Notices'},
+      {page:'timetable', icon:'🗓️', label:'Timetable'},
+      {page:'reports', icon:'📋', label:'Reports'},
+      {page:'settings', icon:'⚙️', label:'Settings'},
+    ]},
+  ],
+};
+
+// ── Auth ──────────────────────────────────────────────────────
+const ROLE_USERS = {
+  principal: {name:'Dr. Sarah Namukasa',role:'Principal'},
+  bursar: {name:'Ms. Florence Nakawunde',role:'Bursar'},
+  registrar: {name:'Mr. Stephen Mukasa',role:'Academic Registrar'},
+  teacher: {name:'Mr. Robert Kiggundu',role:'Class Teacher — S.4A'},
+  dos: {name:'Mrs. Agnes Nalwanga',role:'Director of Studies'},
+  admin: {name:'System Admin',role:'System Administrator'},
+};
+
+function doLogin(){
+  const role = document.getElementById('demoRole').value;
+  APP.role = role;
+  const u = ROLE_USERS[role];
+  APP.user = { name: u.name, initials: u.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase(), role: u.role };
+  showApp();
+}
+
+function showApp(){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const app = document.getElementById('sApp');
+  app.style.display = 'flex'; app.classList.add('on');
+  document.getElementById('sbName').textContent = APP.user.name;
+  document.getElementById('sbRole').textContent = APP.user.role;
+  document.getElementById('sbAv').textContent = APP.user.initials;
+  document.getElementById('sbSchoolName').textContent = APP.school.short;
+  document.getElementById('tbTerm').textContent = `${APP.school.term} · ${APP.school.year}`;
+  buildNav();
+  loadPage('dashboard');
+}
+
+function doLogout(){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('on');s.style.display='none';});
+  const auth = document.getElementById('sAuth');
+  auth.style.display = 'flex'; auth.classList.add('on');
+}
+
+// ── Navigation ────────────────────────────────────────────────
+function buildNav(){
+  const nav = document.getElementById('nav');
+  const secs = NAV_BY_ROLE[APP.role] || NAV_BY_ROLE.principal;
+  nav.innerHTML = secs.map(sec=>`
+    <div class="nsect">${sec.sect}</div>
+    ${sec.items.map(i=>`<div class="ni" data-page="${i.page}" onclick="loadPage('${i.page}')"><span class="ni-icon">${i.icon}</span>${i.label}</div>`).join('')}
+  `).join('');
+}
+
+function setActiveNav(page){
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll(`[data-page="${page}"]`).forEach(n=>n.classList.add('active'));
+  const titles = {
+    dashboard:'School Dashboard',students:'Student Register',classes:'Classes & Streams',
+    exams:'Examinations & Results',staff:'Staff & Human Resources',fees:'Fees & Payments',
+    finance:'School Finance',inventory:'Inventory & Stores',notices:'Notices & Circulars',
+    timetable:'School Timetable',reports:'Reports & Analytics',settings:'System Settings'
+  };
+  document.getElementById('tbTitle').textContent = titles[page] || cap(page);
+  APP.currentPage = page;
+}
+
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('sbOv').classList.add('on');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sbOv').classList.remove('on');}
+
+// ── Page Router ───────────────────────────────────────────────
+function loadPage(page){
+  closeSidebar();
+  setActiveNav(page);
+  const c = document.getElementById('module-container');
+  c.innerHTML = '<div class="loading"><div class="spinner"></div>Loading…</div>';
+  setTimeout(()=>{
+    switch(page){
+      case 'dashboard': renderDashboard(); break;
+      case 'students': renderStudents(); break;
+      case 'classes': renderClasses(); break;
+      case 'exams': renderExams(); break;
+      case 'staff': renderStaff(); break;
+      case 'fees': renderFees(); break;
+      case 'finance': renderFinance(); break;
+      case 'inventory': renderInventory(); break;
+      case 'notices': renderNotices(); break;
+      case 'timetable': renderTimetable(); break;
+      case 'reports': renderReports(); break;
+      case 'settings': renderSettings(); break;
+      default: c.innerHTML = `<div class="empty"><div class="ei">🚧</div><p>Module coming soon</p></div>`;
+    }
+  }, 80);
+}
+
+// ── Dashboard ─────────────────────────────────────────────────
+function renderDashboard(){
+  const paid = DATA.fees.filter(f=>f.status==='Paid').length;
+  const partial = DATA.fees.filter(f=>f.status==='Partial').length;
+  const unpaid = DATA.fees.filter(f=>f.status==='Unpaid').length;
+  const totalCollected = DATA.fees.reduce((s,f)=>s+f.paid,0);
+  const totalExpected = DATA.fees.reduce((s,f)=>s+f.term_fee,0);
+  const collPct = Math.round(totalCollected/totalExpected*100);
+  document.getElementById('module-container').innerHTML = `
+    <div class="page-header">
+      <div class="ph-icon">🏫</div>
+      <div class="ph-info">
+        <h2>${APP.school.name}</h2>
+        <p>Uganda Certificate of Education (UCE) & Uganda Advanced Certificate (UACE) · Affiliated to UNEB</p>
+        <div class="meta">
+          <span class="meta-tag">Term 2, 2025</span>
+          <span class="meta-tag">${APP.school.type} School</span>
+          <span class="meta-tag">Mixed Day & Boarding</span>
+          <span class="meta-tag">EST. 1952</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Total Students</div><div class="sc-v">1,247</div><div class="sc-s">Enrolled Term 2</div><div class="sc-trend sc-up">↑ 38 new this term</div></div>
+      <div class="sc"><div class="sc-l">Teaching Staff</div><div class="sc-v">84</div><div class="sc-s">Active teachers</div><div class="sc-trend sc-up">↑ PTR 1:14.8</div></div>
+      <div class="sc"><div class="sc-l">Fees Collected</div><div class="sc-v">${fmUGX(totalCollected)}</div><div class="sc-s">Term 2 · ${collPct}% of target</div><div class="sc-trend sc-up">↑ ${collPct}% collection rate</div></div>
+      <div class="sc"><div class="sc-l">Defaulters</div><div class="sc-v">${unpaid + partial}</div><div class="sc-s">Unpaid or partial</div><div class="sc-trend sc-dn">↓ ${unpaid} fully unpaid</div></div>
+      <div class="sc"><div class="sc-l">Classes</div><div class="sc-v">24</div><div class="sc-s">S.1 – S.6 · 4 streams</div></div>
+      <div class="sc"><div class="sc-l">Exam Candidates</div><div class="sc-v">312</div><div class="sc-s">UCE + UACE 2025</div></div>
+    </div>
+
+    <div class="dash-grid">
+      <div class="widget">
+        <div class="widget-title">📢 Latest Notices</div>
+        ${DATA.notices.slice(0,3).map(n=>`
+          <div class="wi-row">
+            <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${n.title}</div><div style="font-size:11px;color:var(--chalk3)">${fd(n.date)}</div></div>
+            ${sb(n.priority)}
+          </div>
+        `).join('')}
+        <button class="btn btn-ghost btn-full btn-sm" onclick="loadPage('notices')" style="margin-top:10px;">View All →</button>
+      </div>
+
+      <div class="widget">
+        <div class="widget-title">💰 Fees Collection Status</div>
+        <div class="wi-row"><span>Fully Paid</span><span style="color:var(--green2);font-weight:700">${paid} students</span></div>
+        <div class="wi-row"><span>Partial Payment</span><span style="color:var(--amber);font-weight:700">${partial} students</span></div>
+        <div class="wi-row"><span>Not Paid</span><span style="color:var(--red);font-weight:700">${unpaid} students</span></div>
+        <div style="margin-top:12px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--chalk3);margin-bottom:6px;"><span>Collection Rate</span><span>${collPct}%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:${collPct}%"></div></div>
+        </div>
+        <button class="btn btn-ghost btn-full btn-sm" onclick="loadPage('fees')" style="margin-top:10px;">Manage Fees →</button>
+      </div>
+
+      <div class="widget">
+        <div class="widget-title">📝 Recent Exam Results</div>
+        ${DATA.exams.slice(0,4).map(e=>`
+          <div class="wi-row">
+            <div style="flex:1"><div style="font-size:12px;font-weight:600">${e.student}</div><div style="font-size:11px;color:var(--chalk3)">${e.subject} · ${e.exam}</div></div>
+            <span class="${gradeClass(e.grade)}" style="font-family:'JetBrains Mono';font-size:13px;">${e.grade}</span>
+          </div>
+        `).join('')}
+        <button class="btn btn-ghost btn-full btn-sm" onclick="loadPage('exams')" style="margin-top:10px;">All Results →</button>
+      </div>
+
+      <div class="widget">
+        <div class="widget-title">🏦 Recent Transactions</div>
+        ${DATA.transactions.slice(0,4).map(t=>`
+          <div class="wi-row">
+            <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.desc}</div><div style="font-size:11px;color:var(--chalk3)">${fd(t.date)} · ${t.category}</div></div>
+            <span style="font-family:'JetBrains Mono';font-size:12px;font-weight:700;color:${t.type==='Income'?'var(--green2)':'var(--red)'};">${t.type==='Income'?'+':'-'}${fmUGX(Math.abs(t.amount)).replace('UGX ','')}</span>
+          </div>
+        `).join('')}
+        <button class="btn btn-ghost btn-full btn-sm" onclick="loadPage('finance')" style="margin-top:10px;">View Finance →</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph2"><div class="pt">🌍 East Africa Curriculum & Exam Board</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;border-top:1px solid var(--line);">
+        ${[
+          {flag:'🇺🇬',country:'Uganda',board:'UNEB',exams:'PLE · UCE · UACE',curr:'UGX'},
+          {flag:'🇰🇪',country:'Kenya',board:'KNEC',exams:'KCPE · KCSE',curr:'KES'},
+          {flag:'🇹🇿',country:'Tanzania',board:'NECTA',exams:'PSLE · CSEE · ACSEE',curr:'TZS'},
+          {flag:'🇷🇼',country:'Rwanda',board:'REB',exams:'PEB · NCE',curr:'RWF'},
+        ].map(c=>`
+          <div style="padding:16px 20px;border-right:1px solid var(--line);">
+            <div style="font-size:24px;margin-bottom:6px;">${c.flag}</div>
+            <div style="font-size:13px;font-weight:700;">${c.country}</div>
+            <div style="font-size:11px;color:var(--chalk3)">${c.board} · ${c.curr}</div>
+            <div style="font-size:10px;color:var(--green2);margin-top:4px;font-weight:600;">${c.exams}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ── Students ──────────────────────────────────────────────────
+function renderStudents(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div>
+        <div class="ph-title">👩‍🎓 Student Register</div>
+        <div class="ph-sub">Enrolment · Profiles · Parent Contacts · Boarding</div>
+      </div>
+      <div class="ph-actions">
+        <input type="text" id="stuSearch" placeholder="Search students…" oninput="filterStudents()" style="padding:8px 14px;border-radius:var(--r);background:var(--bg3);color:var(--chalk);border:1px solid var(--line);font-size:13px;width:200px;">
+        <select id="stuClass" onchange="filterStudents()" style="padding:8px 12px;border-radius:var(--r);background:var(--bg3);color:var(--chalk);border:1px solid var(--line);font-size:13px;">
+          <option value="">All Classes</option>
+          ${[...new Set(DATA.students.map(s=>s.class))].map(c=>`<option>${c}</option>`).join('')}
+        </select>
+        <select id="stuStatus" onchange="filterStudents()" style="padding:8px 12px;border-radius:var(--r);background:var(--bg3);color:var(--chalk);border:1px solid var(--line);font-size:13px;">
+          <option value="">All Status</option>
+          <option>Paid</option><option>Partial</option><option>Unpaid</option>
+        </select>
+        <button class="btn btn-g" onclick="showAddStudent()">+ Admit Student</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Total Enrolled</div><div class="sc-v">1,247</div></div>
+      <div class="sc"><div class="sc-l">Female</div><div class="sc-v">641</div><div class="sc-s">51.4%</div></div>
+      <div class="sc"><div class="sc-l">Boarders</div><div class="sc-v">428</div><div class="sc-s">Day: 819</div></div>
+      <div class="sc"><div class="sc-l">Districts</div><div class="sc-v">24</div><div class="sc-s">Represented</div></div>
+    </div>
+    <div class="panel">
+      <div class="ph2"><div class="pt">Students (${DATA.students.length} shown)</div></div>
+      <div class="tbl-wrap" id="stuTable">
+        ${renderStudentTable(DATA.students)}
+      </div>
+    </div>
+  `;
+}
+
+function renderStudentTable(students){
+  if(!students.length) return '<div class="empty"><div class="ei">👩‍🎓</div><p>No students found</p></div>';
+  return `<table>
+    <thead><tr><th>ID</th><th>Name</th><th>Class</th><th>Stream</th><th>Gender</th><th>Boarding</th><th>District</th><th>Fees</th><th>Actions</th></tr></thead>
+    <tbody>${students.map(s=>`
+      <tr>
+        <td class="mono">${s.id}</td>
+        <td style="font-weight:600">${s.name}</td>
+        <td>${sb(s.class)}</td>
+        <td>${s.stream}</td>
+        <td>${s.gender==='F'?'👩 Female':'👨 Male'}</td>
+        <td>${sb(s.boarding)}</td>
+        <td>${s.district}</td>
+        <td class="${s.status==='Paid'?'fee-paid':s.status==='Partial'?'fee-partial':'fee-unpaid'}">${sb(s.status)}</td>
+        <td><button class="btn btn-ghost btn-sm" onclick="viewStudent('${s.id}')">View</button></td>
+      </tr>
+    `).join('')}</tbody>
+  </table>`;
+}
+
+function filterStudents(){
+  const q = (document.getElementById('stuSearch').value||'').toLowerCase();
+  const cls = document.getElementById('stuClass').value;
+  const stat = document.getElementById('stuStatus').value;
+  const filtered = DATA.students.filter(s=>{
+    if(q && !s.name.toLowerCase().includes(q) && !s.id.toLowerCase().includes(q)) return false;
+    if(cls && s.class !== cls) return false;
+    if(stat && s.status !== stat) return false;
+    return true;
+  });
+  document.getElementById('stuTable').innerHTML = renderStudentTable(filtered);
+}
+
+function viewStudent(id){
+  const s = DATA.students.find(x=>x.id===id);
+  if(!s) return;
+  const fees = DATA.fees.find(f=>f.student===s.name)||{};
+  const exams = DATA.exams.filter(e=>e.student===s.name);
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal" style="max-width:680px;">
+    <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+      <div style="width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--green),#2e7d32);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;">${s.gender==='F'?'👩':'👨'}</div>
+      <div>
+        <div class="modal-title">${s.name}</div>
+        <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">${sb(s.class)}${sb(s.stream)}${sb(s.boarding)}</div>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">STUDENT ID</div><div class="mono">${s.id}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">DATE OF BIRTH</div><div>${fd(s.dob)}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">PARENT / GUARDIAN</div><div style="font-weight:600">${s.parent}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">PHONE</div><div class="mono">${s.phone}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">DISTRICT</div><div>${s.district}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">DATE ADMITTED</div><div>${fd(s.admit)}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">FEES STATUS</div><div>${sb(s.status)}</div></div>
+      <div><div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--chalk3);margin-bottom:4px;">BALANCE</div><div class="mono ${fees.balance>0?'fee-unpaid':''}">${fmUGX(fees.balance||0)}</div></div>
+    </div>
+    ${exams.length?`
+    <div style="margin-top:20px;">
+      <div style="font-size:12px;font-weight:700;color:var(--chalk3);margin-bottom:10px;">RECENT EXAM RESULTS</div>
+      <table style="font-size:12px;"><thead><tr><th>Subject</th><th>Score</th><th>Grade</th><th>Exam</th><th>Remarks</th></tr></thead>
+      <tbody>${exams.map(e=>`<tr><td>${e.subject}</td><td class="mono">${e.score}%</td><td class="${gradeClass(e.grade)} mono">${e.grade}</td><td>${e.exam}</td><td>${e.remarks}</td></tr>`).join('')}</tbody></table>
+    </div>`:''}
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Printing report card…','ok')">🖨️ Report Card</button>
+      <button class="btn btn-o" onclick="toast('SMS sent to parent','ok')">📱 SMS Parent</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Close</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+function showAddStudent(){
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">Admit New Student</div>
+    <div class="modal-sub">Uganda — Register new student with UNEB details</div>
+    <div class="modal-grid">
+      <div class="fld"><label>Surname</label><input placeholder="e.g. Nalubega"></div>
+      <div class="fld"><label>Given Names</label><input placeholder="e.g. Aisha Mary"></div>
+      <div class="fld"><label>Class</label>
+        <select>${['S.1A','S.1B','S.2A','S.2B','S.3A','S.3B','S.4A','S.4B','S.5A','S.5B','S.6A','S.6B'].map(c=>`<option>${c}</option>`).join('')}</select>
+      </div>
+      <div class="fld"><label>Stream</label>
+        <select><option>Sciences</option><option>Arts</option><option>Commerce</option><option>Mixed</option></select>
+      </div>
+      <div class="fld"><label>Gender</label>
+        <select><option value="F">Female</option><option value="M">Male</option></select>
+      </div>
+      <div class="fld"><label>Boarding Status</label>
+        <select><option>Day</option><option>Boarding</option></select>
+      </div>
+      <div class="fld"><label>Date of Birth</label><input type="date"></div>
+      <div class="fld"><label>District</label><input placeholder="e.g. Kampala"></div>
+      <div class="fld col-full"><label>Parent / Guardian Name</label><input placeholder="e.g. Grace Nalubega"></div>
+      <div class="fld"><label>Parent Phone</label><input placeholder="+256 7XX XXX XXX"></div>
+      <div class="fld"><label>Relationship</label>
+        <select><option>Mother</option><option>Father</option><option>Guardian</option><option>Other</option></select>
+      </div>
+      <div class="fld col-full"><label>National ID / Birth Certificate No.</label><input placeholder="e.g. CF28100123456DE"></div>
+      <div class="fld col-full"><label>Admission Date</label><input type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Student admitted successfully','ok');this.closest('.modal-bg').remove()">✓ Admit Student</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+// ── Classes ───────────────────────────────────────────────────
+function renderClasses(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">🏫 Classes & Streams</div><div class="ph-sub">S.1 – S.6 · Sciences · Arts · Commerce</div></div>
+      <div class="ph-actions"><button class="btn btn-g" onclick="toast('Add Class modal — connect Supabase','info')">+ Add Class</button></div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Total Classes</div><div class="sc-v">24</div></div>
+      <div class="sc"><div class="sc-l">Total Students</div><div class="sc-v">1,247</div></div>
+      <div class="sc"><div class="sc-l">Avg Class Size</div><div class="sc-v">52</div></div>
+      <div class="sc"><div class="sc-l">Science Streams</div><div class="sc-v">12</div></div>
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table><thead><tr><th>Class</th><th>Stream</th><th>Class Teacher</th><th>Students</th><th>Room</th><th>Capacity</th><th>Fill Rate</th><th>Actions</th></tr></thead>
+        <tbody>${DATA.classes.map(c=>`
+          <tr>
+            <td style="font-weight:700">${c.name}</td>
+            <td><span class="badge ${c.stream==='Sciences'?'bg':c.stream==='Arts'?'bp':c.stream==='Commerce'?'ba':'bc'}">${c.stream}</span></td>
+            <td>${c.teacher}</td>
+            <td class="mono">${c.students}</td>
+            <td>${c.room}</td>
+            <td class="mono">${c.capacity}</td>
+            <td>
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div class="prog-bar" style="width:70px"><div class="prog-fill" style="width:${Math.round(c.students/c.capacity*100)}%"></div></div>
+                <span class="mono" style="font-size:11px">${Math.round(c.students/c.capacity*100)}%</span>
+              </div>
+            </td>
+            <td><button class="btn btn-ghost btn-sm" onclick="toast('View class details','info')">View</button></td>
+          </tr>
+        `).join('')}</tbody></table>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ph2"><div class="pt">📚 Subject Allocations</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0;border-top:1px solid var(--line);">
+        ${[
+          {subj:'Mathematics',teacher:'Mr. Kiggundu',classes:'S.4A, S.6A, S.6B',periods:12},
+          {subj:'English Language',teacher:'Mrs. Nalwanga',classes:'S.1, S.2, S.3',periods:15},
+          {subj:'Biology & Chemistry',teacher:'Mr. Muthama',classes:'S.5, S.6',periods:10},
+          {subj:'History',teacher:'Ms. Achieng',classes:'S.3, S.4, S.5',periods:9},
+          {subj:'Physics',teacher:'Mr. Byaruhanga',classes:'S.4A, S.5A, S.6A',periods:10},
+          {subj:'Geography',teacher:'Mrs. Mwangi',classes:'S.2, S.3',periods:8},
+          {subj:'ICT',teacher:'Mr. Ssemanda',classes:'S.1–S.4',periods:8},
+          {subj:'Home Economics',teacher:'Mrs. Nakato',classes:'S.1, S.2',periods:6},
+        ].map(s=>`<div style="padding:14px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)">
+          <div style="font-weight:700;font-size:13px">${s.subj}</div>
+          <div style="font-size:11px;color:var(--chalk3);margin-top:2px">${s.teacher}</div>
+          <div style="font-size:11px;margin-top:4px">${s.classes}</div>
+          <div style="font-size:10px;color:var(--green2);font-weight:600;margin-top:4px">${s.periods} periods/week</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ── Exams ─────────────────────────────────────────────────────
+function renderExams(){
+  const avg = d => d.length ? Math.round(d.reduce((s,e)=>s+e.score,0)/d.length) : 0;
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">📝 Examinations & Results</div><div class="ph-sub">UNEB · UCE · UACE · Internal Assessments · Mid-Terms · End of Term</div></div>
+      <div class="ph-actions">
+        <button class="btn btn-o" onclick="showMarkEntry()">✏️ Enter Marks</button>
+        <button class="btn btn-g" onclick="toast('Generating result slips…','ok')">🖨️ Print Results</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Average Score</div><div class="sc-v">${avg(DATA.exams)}%</div><div class="sc-s">Mid-Term 2025</div></div>
+      <div class="sc"><div class="sc-l">Distinction (D)</div><div class="sc-v">${DATA.exams.filter(e=>['D1','D2'].includes(e.grade)).length}</div><div class="sc-s">D1–D2 grades</div></div>
+      <div class="sc"><div class="sc-l">Credit (C)</div><div class="sc-v">${DATA.exams.filter(e=>['C3','C4','C5','C6'].includes(e.grade)).length}</div><div class="sc-s">C3–C6 grades</div></div>
+      <div class="sc"><div class="sc-l">Fail / Below Pass</div><div class="sc-v">${DATA.exams.filter(e=>e.score<50).length}</div><div class="sc-s">Below 50%</div></div>
+    </div>
+    <div class="panel">
+      <div class="mod-tabs">
+        <button class="mtab active" onclick="switchExamTab('results',this)">📊 Results</button>
+        <button class="mtab" onclick="switchExamTab('schedule',this)">📅 Exam Schedule</button>
+        <button class="mtab" onclick="switchExamTab('uneb',this)">🎓 UNEB Prep</button>
+      </div>
+      <div id="examTabContent">
+        <div class="tbl-wrap">
+          <table><thead><tr><th>Student</th><th>Class</th><th>Subject</th><th>Score</th><th>Grade</th><th>Exam</th><th>Teacher</th><th>Remarks</th></tr></thead>
+          <tbody>${DATA.exams.map(e=>`
+            <tr>
+              <td style="font-weight:600">${e.student}</td>
+              <td>${e.class}</td>
+              <td>${e.subject}</td>
+              <td class="mono">${e.score}%
+                <div class="prog-bar" style="width:60px;margin-top:3px"><div class="prog-fill" style="width:${e.score}%;background:${e.score>=80?'var(--green)':e.score>=60?'var(--amber)':'var(--red)'}"></div></div>
+              </td>
+              <td class="${gradeClass(e.grade)} mono" style="font-size:14px;font-weight:700">${e.grade}</td>
+              <td>${e.exam}</td>
+              <td>${e.teacher}</td>
+              <td style="font-size:11px;color:var(--chalk3)">${e.remarks}</td>
+            </tr>
+          `).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ph2"><div class="pt">🇺🇬 UNEB Uganda Grading Scale (UCE)</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));border-top:1px solid var(--line);">
+        ${[
+          {g:'D1',range:'80–100%',color:'var(--green2)'},
+          {g:'D2',range:'75–79%',color:'var(--green2)'},
+          {g:'C3',range:'70–74%',color:'var(--lime)'},
+          {g:'C4',range:'65–69%',color:'var(--lime)'},
+          {g:'C5',range:'60–64%',color:'var(--amber)'},
+          {g:'C6',range:'55–59%',color:'var(--amber)'},
+          {g:'P7',range:'45–54%',color:'var(--red)'},
+          {g:'P8',range:'40–44%',color:'var(--red)'},
+          {g:'F9',range:'0–39%',color:'var(--red)'},
+        ].map(g=>`<div style="padding:14px;border-right:1px solid var(--line);text-align:center">
+          <div style="font-size:22px;font-weight:700;font-family:'JetBrains Mono';color:${g.color}">${g.g}</div>
+          <div style="font-size:10px;color:var(--chalk3);margin-top:4px">${g.range}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function switchExamTab(tab, btn){
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const c = document.getElementById('examTabContent');
+  if(tab==='schedule'){
+    c.innerHTML = `<div style="padding:20px">
+      ${[
+        {exam:'Mid-Term Examinations',dates:'21–25 April 2025',classes:'S.1–S.6',status:'Completed'},
+        {exam:'S.4 Mock (UCE)',dates:'12–20 May 2025',classes:'S.4 Only',status:'Upcoming'},
+        {exam:'S.6 Mock (UACE)',dates:'12–23 May 2025',classes:'S.6 Only',status:'Upcoming'},
+        {exam:'End of Term Exams',dates:'9–20 June 2025',classes:'S.1–S.5',status:'Upcoming'},
+        {exam:'UNEB UCE (National)',dates:'Oct–Nov 2025',classes:'S.4',status:'UNEB Scheduled'},
+        {exam:'UNEB UACE (National)',dates:'Nov–Dec 2025',classes:'S.6',status:'UNEB Scheduled'},
+      ].map(e=>`<div class="announce-card">
+        <div class="ann-head"><strong>${e.exam}</strong>${sb(e.status)}<span class="ann-date">${e.dates}</span></div>
+        <div class="ann-body">Classes: <strong>${e.classes}</strong></div>
+      </div>`).join('')}
+    </div>`;
+  } else if(tab==='uneb'){
+    c.innerHTML = `<div style="padding:20px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="panel" style="margin:0;padding:16px">
+          <div style="font-weight:700;margin-bottom:12px">🎓 UCE Candidates 2025</div>
+          <div class="wi-row"><span>S.4 Registered</span><span style="font-weight:700">187</span></div>
+          <div class="wi-row"><span>UNEB Fees Paid</span><span style="color:var(--green2);font-weight:700">171</span></div>
+          <div class="wi-row"><span>Fees Pending</span><span style="color:var(--red);font-weight:700">16</span></div>
+          <div class="wi-row"><span>Sciences Stream</span><span>89</span></div>
+          <div class="wi-row"><span>Arts Stream</span><span>62</span></div>
+          <div class="wi-row"><span>Commerce</span><span>36</span></div>
+        </div>
+        <div class="panel" style="margin:0;padding:16px">
+          <div style="font-weight:700;margin-bottom:12px">🎓 UACE Candidates 2025</div>
+          <div class="wi-row"><span>S.6 Registered</span><span style="font-weight:700">125</span></div>
+          <div class="wi-row"><span>UNEB Fees Paid</span><span style="color:var(--green2);font-weight:700">119</span></div>
+          <div class="wi-row"><span>Fees Pending</span><span style="color:var(--red);font-weight:700">6</span></div>
+          <div class="wi-row"><span>Sciences</span><span>58</span></div>
+          <div class="wi-row"><span>Arts</span><span>42</span></div>
+          <div class="wi-row"><span>Commerce</span><span>25</span></div>
+        </div>
+      </div>
+      <div style="margin-top:16px;background:var(--amber-t);border:1px solid rgba(255,179,0,.25);border-radius:var(--r);padding:14px;font-size:13px;">
+        ⚠️ <strong>16 UCE candidates</strong> have not paid UNEB registration fees. Deadline: 15th May 2025. Contact parents immediately.
+      </div>
+    </div>`;
+  } else {
+    c.innerHTML = `<div class="tbl-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Subject</th><th>Score</th><th>Grade</th><th>Exam</th><th>Teacher</th><th>Remarks</th></tr></thead>
+    <tbody>${DATA.exams.map(e=>`<tr><td style="font-weight:600">${e.student}</td><td>${e.class}</td><td>${e.subject}</td><td class="mono">${e.score}%</td><td class="${gradeClass(e.grade)} mono" style="font-size:14px;font-weight:700">${e.grade}</td><td>${e.exam}</td><td>${e.teacher}</td><td style="font-size:11px;color:var(--chalk3)">${e.remarks}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+}
+
+function showMarkEntry(){
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">✏️ Enter Exam Marks</div>
+    <div class="modal-sub">Record student results — Uganda UNEB grading applied automatically</div>
+    <div class="modal-grid">
+      <div class="fld"><label>Examination</label>
+        <select><option>Mid-Term 2025</option><option>S.4 Mock 2025</option><option>S.6 Mock 2025</option><option>End of Term 2025</option></select>
+      </div>
+      <div class="fld"><label>Class</label>
+        <select>${DATA.classes.map(c=>`<option>${c.name}</option>`).join('')}</select>
+      </div>
+      <div class="fld col-full"><label>Subject</label>
+        <select><option>Mathematics</option><option>English Language</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>History</option><option>Geography</option><option>CRE</option><option>ICT</option><option>Economics</option></select>
+      </div>
+      <div class="fld"><label>Student</label>
+        <select>${DATA.students.map(s=>`<option value="${s.id}">${s.name}</option>`).join('')}</select>
+      </div>
+      <div class="fld"><label>Score (%)</label><input type="number" min="0" max="100" placeholder="0–100" oninput="calcGrade(this.value)"></div>
+      <div class="fld"><label>Auto Grade</label><input id="autoGrade" readonly placeholder="Grade auto-calculated"></div>
+      <div class="fld col-full"><label>Teacher Remarks</label><input placeholder="e.g. Excellent performance, needs improvement in algebra"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Mark saved successfully','ok');this.closest('.modal-bg').remove()">✓ Save Mark</button>
+      <button class="btn btn-o" onclick="toast('Saving bulk marks…','ok')">📋 Bulk Upload CSV</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+function calcGrade(v){
+  const n=Number(v);
+  const g=n>=80?'D1':n>=75?'D2':n>=70?'C3':n>=65?'C4':n>=60?'C5':n>=55?'C6':n>=45?'P7':n>=40?'P8':'F9';
+  const el=document.getElementById('autoGrade');
+  if(el) el.value=g+` (${n}%)`;
+}
+
+// ── Staff ─────────────────────────────────────────────────────
+function renderStaff(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">👔 Staff & Human Resources</div><div class="ph-sub">Teachers · Support Staff · Leave · Payroll · Appraisals</div></div>
+      <div class="ph-actions">
+        <button class="btn btn-o" onclick="toast('Leave management','info')">📅 Leave</button>
+        <button class="btn btn-g" onclick="showAddStaff()">+ Add Staff</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Total Staff</div><div class="sc-v">84</div></div>
+      <div class="sc"><div class="sc-l">Teaching</div><div class="sc-v">68</div><div class="sc-s">80.9%</div></div>
+      <div class="sc"><div class="sc-l">Non-Teaching</div><div class="sc-v">16</div></div>
+      <div class="sc"><div class="sc-l">On Leave</div><div class="sc-v">${DATA.staff.filter(s=>s.status==='Leave').length}</div></div>
+      <div class="sc"><div class="sc-l">Total Payroll</div><div class="sc-v">${fmUGX(DATA.staff.reduce((s,t)=>s+t.salary,0))}</div><div class="sc-s">Monthly (sample)</div></div>
+      <div class="sc"><div class="sc-l">Avg Salary</div><div class="sc-v">${fmUGX(Math.round(DATA.staff.reduce((s,t)=>s+t.salary,0)/DATA.staff.length))}</div></div>
+    </div>
+    <div class="panel">
+      <div class="mod-tabs">
+        <button class="mtab active" onclick="switchStaffTab('list',this)">👔 All Staff</button>
+        <button class="mtab" onclick="switchStaffTab('payroll',this)">💵 Payroll</button>
+        <button class="mtab" onclick="switchStaffTab('leave',this)">🏖 Leave</button>
+      </div>
+      <div id="staffTabContent">
+        <div class="tbl-wrap">
+          <table><thead><tr><th>ID</th><th>Name</th><th>Subject / Role</th><th>Type</th><th>Qualification</th><th>Status</th><th>Salary (UGX)</th><th>Actions</th></tr></thead>
+          <tbody>${DATA.staff.map(t=>`
+            <tr>
+              <td class="mono">${t.id}</td>
+              <td style="font-weight:600">${t.name}</td>
+              <td>${t.subject}</td>
+              <td>${sb(t.type)}</td>
+              <td style="font-size:11px;color:var(--chalk3)">${t.qual}</td>
+              <td>${sb(t.status)}</td>
+              <td class="mono">${fm(t.salary)}</td>
+              <td><button class="btn btn-ghost btn-sm" onclick="toast('Staff profile — connect Supabase','info')">View</button></td>
+            </tr>
+          `).join('')}</tbody></table>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function switchStaffTab(tab, btn){
+  document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const c = document.getElementById('staffTabContent');
+  if(tab==='payroll'){
+    c.innerHTML = `<div style="padding:20px">
+      <div style="margin-bottom:14px;display:flex;gap:10px;align-items:center">
+        <select style="padding:8px 12px;border-radius:var(--r);background:var(--bg3);color:var(--chalk);border:1px solid var(--line);font-size:13px"><option>April 2025</option><option>March 2025</option><option>February 2025</option></select>
+        <button class="btn btn-g btn-sm" onclick="toast('Payroll processed and sent to bank','ok')">▶ Run Payroll</button>
+        <button class="btn btn-o btn-sm" onclick="toast('Generating pay slips…','info')">🖨 Pay Slips</button>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Name</th><th>Type</th><th>Gross (UGX)</th><th>NSSF (5%)</th><th>PAYE</th><th>Net Pay (UGX)</th><th>Status</th></tr></thead>
+        <tbody>${DATA.staff.map(t=>{
+          const nssf=Math.round(t.salary*0.05);
+          const paye=t.salary>235000?Math.round((t.salary-235000)*0.10):0;
+          const net=t.salary-nssf-paye;
+          return `<tr><td style="font-weight:600">${t.name}</td><td>${t.type}</td><td class="mono">${fm(t.salary)}</td><td class="mono" style="color:var(--amber)">${fm(nssf)}</td><td class="mono" style="color:var(--amber)">${fm(paye)}</td><td class="mono fee-paid">${fm(net)}</td><td>${sb(t.status==='Active'?'Paid':'Pending')}</td></tr>`;
+        }).join('')}</tbody>
+      </table></div>
+      <div style="margin-top:14px;background:var(--green-t);border:1px solid rgba(76,175,80,.2);border-radius:var(--r);padding:12px;font-size:13px">
+        ✅ NSSF: 5% employee deduction + 10% employer contribution (Uganda NSSF Act 1985) · PAYE: graduated tax per URA brackets
+      </div>
+    </div>`;
+  } else if(tab==='leave'){
+    c.innerHTML = `<div style="padding:20px">
+      ${[
+        {name:'Mr. Julius Okello',type:'Annual Leave',from:'2025-04-15',to:'2025-05-10',days:25,status:'Approved'},
+        {name:'Mrs. Rebecca Nakato',type:'Maternity Leave',from:'2025-06-01',to:'2025-08-31',days:91,status:'Pending'},
+        {name:'Mr. Robert Kiggundu',type:'Sick Leave',from:'2025-04-28',to:'2025-04-30',days:3,status:'Approved'},
+      ].map(l=>`<div class="announce-card">
+        <div class="ann-head"><strong>${l.name}</strong><span class="badge ${l.type.includes('Annual')?'bg':l.type.includes('Maternity')?'bp':'ba'}">${l.type}</span>${sb(l.status)}<span class="ann-date">${fd(l.from)} – ${fd(l.to)} (${l.days} days)</span></div>
+      </div>`).join('')}
+      <button class="btn btn-g" onclick="toast('Leave request form','info')" style="margin-top:12px">+ New Leave Request</button>
+    </div>`;
+  } else {
+    c.innerHTML = `<div class="tbl-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Subject / Role</th><th>Type</th><th>Qualification</th><th>Status</th><th>Salary (UGX)</th><th>Actions</th></tr></thead>
+    <tbody>${DATA.staff.map(t=>`<tr><td class="mono">${t.id}</td><td style="font-weight:600">${t.name}</td><td>${t.subject}</td><td>${sb(t.type)}</td><td style="font-size:11px;color:var(--chalk3)">${t.qual}</td><td>${sb(t.status)}</td><td class="mono">${fm(t.salary)}</td><td><button class="btn btn-ghost btn-sm" onclick="toast('View staff','info')">View</button></td></tr>`).join('')}</tbody></table></div>`;
+  }
+}
+
+function showAddStaff(){
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">Add Staff Member</div>
+    <div class="modal-sub">Uganda Ministry of Education — Staff Registration</div>
+    <div class="modal-grid">
+      <div class="fld"><label>Surname</label><input placeholder="e.g. Kiggundu"></div>
+      <div class="fld"><label>Given Names</label><input placeholder="e.g. Robert Paul"></div>
+      <div class="fld"><label>Staff Type</label><select><option>Teaching</option><option>Non-Teaching</option></select></div>
+      <div class="fld"><label>Subject / Department</label><input placeholder="e.g. Mathematics"></div>
+      <div class="fld"><label>Qualification</label><input placeholder="e.g. B.Ed Makerere University"></div>
+      <div class="fld"><label>Gross Salary (UGX)</label><input type="number" placeholder="e.g. 1200000"></div>
+      <div class="fld"><label>Phone Number</label><input placeholder="+256 7XX XXX XXX"></div>
+      <div class="fld"><label>Date Joined</label><input type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+      <div class="fld col-full"><label>National ID</label><input placeholder="e.g. CM19800512345UG"></div>
+      <div class="fld col-full"><label>NSSF Number</label><input placeholder="e.g. 1234567890"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Staff member added','ok');this.closest('.modal-bg').remove()">✓ Add Staff</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+// ── Fees ──────────────────────────────────────────────────────
+function renderFees(){
+  const totalBal = DATA.fees.reduce((s,f)=>s+f.balance,0);
+  const totalCollected = DATA.fees.reduce((s,f)=>s+f.paid,0);
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">💰 Fees & Payments</div><div class="ph-sub">M-Pesa · Airtel Money · Bank · Collection · Receipts · Reminders</div></div>
+      <div class="ph-actions">
+        <button class="btn btn-o" onclick="showFeeModal()">+ Record Payment</button>
+        <button class="btn btn-g" onclick="sendFeeReminders()">📱 SMS Defaulters</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Collected (Term 2)</div><div class="sc-v">${fmUGX(totalCollected)}</div><div class="sc-trend sc-up">↑ ${Math.round(totalCollected/(totalCollected+totalBal)*100)}%</div></div>
+      <div class="sc"><div class="sc-l">Outstanding</div><div class="sc-v">${fmUGX(totalBal)}</div><div class="sc-trend sc-dn">↓ Balance due</div></div>
+      <div class="sc"><div class="sc-l">Paid In Full</div><div class="sc-v">${DATA.fees.filter(f=>f.status==='Paid').length}</div><div class="sc-s">of ${DATA.fees.length} students</div></div>
+      <div class="sc"><div class="sc-l">Via M-Pesa</div><div class="sc-v">${DATA.fees.filter(f=>f.method==='M-Pesa').length}</div><div class="sc-s">transactions</div></div>
+    </div>
+
+    <div class="panel" style="background:linear-gradient(135deg,var(--bg3) 0%,var(--bg2) 100%);border-color:var(--line2);">
+      <div class="ph2"><div class="pt">📱 Mobile Money Integration</div></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));border-top:1px solid var(--line);">
+        ${[
+          {name:'M-Pesa Uganda',icon:'📲',code:'*165#',status:'Active',collected:'UGX 5.2M'},
+          {name:'Airtel Money UG',icon:'📱',code:'*185#',status:'Active',collected:'UGX 3.1M'},
+          {name:'MTN MoMo',icon:'💛',code:'*165#',status:'Active',collected:'UGX 4.8M'},
+          {name:'Bank Transfer',icon:'🏦',code:'Stanbic / ABSA / Centenary',status:'Active',collected:'UGX 12.4M'},
+        ].map(m=>`<div style="padding:16px 20px;border-right:1px solid var(--line)">
+          <div style="font-size:24px;margin-bottom:6px">${m.icon}</div>
+          <div style="font-weight:700;font-size:13px">${m.name}</div>
+          <div style="font-size:11px;color:var(--chalk3);margin-top:2px">${m.code}</div>
+          <div style="display:flex;justify-content:space-between;margin-top:8px;align-items:center">
+            ${sb('Active')}
+            <span style="font-size:11px;color:var(--green2);font-weight:700">${m.collected}</span>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph2">
+        <div class="pt">Fee Records</div>
+        <div style="display:flex;gap:8px">
+          <select id="feeStatusFilter" onchange="filterFees()" style="padding:6px 10px;border-radius:var(--r);background:var(--bg3);color:var(--chalk);border:1px solid var(--line);font-size:12px">
+            <option value="">All</option><option>Paid</option><option>Partial</option><option>Unpaid</option>
+          </select>
+        </div>
+      </div>
+      <div class="tbl-wrap" id="feesTable">
+        ${renderFeesTable(DATA.fees)}
+      </div>
+    </div>
+  `;
+}
+
+function renderFeesTable(fees){
+  return `<table><thead><tr><th>Student</th><th>Class</th><th>Term Fee (UGX)</th><th>Paid (UGX)</th><th>Balance (UGX)</th><th>Last Payment</th><th>Method</th><th>Reference</th><th>Status</th><th>Actions</th></tr></thead>
+  <tbody>${fees.map(f=>`
+    <tr>
+      <td style="font-weight:600">${f.student}</td>
+      <td>${f.class}</td>
+      <td class="mono">${fm(f.term_fee)}</td>
+      <td class="mono fee-paid">${fm(f.paid)}</td>
+      <td class="mono ${f.balance>0?'fee-unpaid':''}">${fm(f.balance)}</td>
+      <td>${fd(f.last_pay)}</td>
+      <td>${f.method?payBadge(f.method):'—'}</td>
+      <td class="mono" style="font-size:10px">${f.ref||'—'}</td>
+      <td>${sb(f.status)}</td>
+      <td>
+        <button class="btn btn-ghost btn-sm" onclick="showReceipt('${f.id}')">🧾 Receipt</button>
+        ${f.balance>0?`<button class="btn btn-g btn-sm" onclick="showFeeModal('${f.id}')" style="margin-left:4px">+ Pay</button>`:''}
+      </td>
+    </tr>
+  `).join('')}</tbody></table>`;
+}
+
+function filterFees(){
+  const stat = document.getElementById('feeStatusFilter').value;
+  const filtered = stat ? DATA.fees.filter(f=>f.status===stat) : DATA.fees;
+  document.getElementById('feesTable').innerHTML = renderFeesTable(filtered);
+}
+
+function showFeeModal(id){
+  const f = id ? DATA.fees.find(x=>x.id===id) : null;
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">💰 Record Fee Payment</div>
+    <div class="modal-sub">Uganda Shillings (UGX) · Supports M-Pesa, Airtel Money, Bank, Cash</div>
+    <div class="modal-grid">
+      <div class="fld col-full"><label>Student</label>
+        <select>${DATA.students.map(s=>`<option ${f&&f.student===s.name?'selected':''}>${s.name} (${s.class})</option>`).join('')}</select>
+      </div>
+      <div class="fld"><label>Amount (UGX)</label><input type="number" placeholder="e.g. 850000" value="${f&&f.balance?f.balance:''}"></div>
+      <div class="fld"><label>Payment Method</label>
+        <select id="payMethod" onchange="togglePayRef()">
+          <option>M-Pesa</option><option>Airtel Money</option><option>MTN MoMo</option>
+          <option>Bank Transfer</option><option>Cash</option><option>Cheque</option>
+        </select>
+      </div>
+      <div class="fld"><label>Transaction Reference</label><input id="payRef" placeholder="e.g. MP240501001"></div>
+      <div class="fld"><label>Payment Date</label><input type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+      <div class="fld"><label>Term</label>
+        <select><option>Term 1, 2025</option><option selected>Term 2, 2025</option><option>Term 3, 2025</option></select>
+      </div>
+      <div class="fld col-full"><label>Notes</label><input placeholder="e.g. Partial payment — balance next week"></div>
+    </div>
+    <div id="mpesaHelp" style="background:rgba(76,175,80,.08);border:1px solid rgba(76,175,80,.2);border-radius:var(--r);padding:12px;margin-bottom:12px;font-size:12px;color:var(--chalk2)">
+      📲 <strong>M-Pesa Uganda:</strong> Parent dials *165# → Send Money → Enter school paybill → Enter student ID as account number
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Payment recorded — receipt sent to parent via SMS','ok');this.closest('.modal-bg').remove()">✓ Record Payment</button>
+      <button class="btn btn-o" onclick="toast('Receipt will be printed','info')">🖨️ Print Receipt</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+function showReceipt(id){
+  const f = DATA.fees.find(x=>x.id===id);
+  if(!f) return;
+  toast(`Receipt for ${f.student} — ${fmUGX(f.paid)} — Printing…`, 'ok');
+}
+
+function sendFeeReminders(){
+  const defaulters = DATA.fees.filter(f=>f.status!=='Paid');
+  toast(`SMS reminders sent to ${defaulters.length} families via MTN/Airtel`, 'ok', 5000);
+}
+
+// ── Finance ───────────────────────────────────────────────────
+function renderFinance(){
+  const income = DATA.transactions.filter(t=>t.type==='Income').reduce((s,t)=>s+t.amount,0);
+  const expense = DATA.transactions.filter(t=>t.type==='Expense').reduce((s,t)=>s+Math.abs(t.amount),0);
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">📊 School Finance</div><div class="ph-sub">Income · Expenditure · Budget · Bank · Government Grants · NSSF · URA Tax</div></div>
+      <div class="ph-actions">
+        <button class="btn btn-o" onclick="showTransModal()">+ Transaction</button>
+        <button class="btn btn-g" onclick="toast('Financial report generated','ok')">📥 Export Report</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Total Income (Term 2)</div><div class="sc-v">${fmUGX(income)}</div><div class="sc-trend sc-up">↑ All sources</div></div>
+      <div class="sc"><div class="sc-l">Total Expenditure</div><div class="sc-v">${fmUGX(expense)}</div><div class="sc-trend sc-dn">↓ This term</div></div>
+      <div class="sc"><div class="sc-l">Net Balance</div><div class="sc-v">${fmUGX(income-expense)}</div><div class="sc-trend ${income>expense?'sc-up':'sc-dn'}">${income>expense?'↑ Surplus':'↓ Deficit'}</div></div>
+      <div class="sc"><div class="sc-l">Govt Capitation</div><div class="sc-v">${fmUGX(3500000)}</div><div class="sc-s">MoES Term 2</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="ph2"><div class="pt">💳 Transaction Ledger</div></div>
+      <div class="tbl-wrap">
+        <table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount (UGX)</th><th>Type</th><th>Reference</th></tr></thead>
+        <tbody>${DATA.transactions.map(t=>`
+          <tr>
+            <td>${fd(t.date)}</td>
+            <td style="font-weight:600">${t.desc}</td>
+            <td style="font-size:11px;color:var(--chalk3)">${t.category}</td>
+            <td class="mono" style="color:${t.type==='Income'?'var(--green2)':'var(--red)'};">${t.type==='Income'?'+':'-'}${fm(Math.abs(t.amount))}</td>
+            <td><span class="badge ${t.type==='Income'?'bg':'br'}">${t.type}</span></td>
+            <td class="mono" style="font-size:10px">${t.ref}</td>
+          </tr>
+        `).join('')}</tbody></table>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="panel">
+        <div class="ph2"><div class="pt">📈 Income Breakdown</div></div>
+        <div style="padding:16px">
+          ${[
+            {cat:'School Fees',amt:4800000,pct:39},
+            {cat:'Boarding Fees',amt:4200000,pct:34},
+            {cat:'Govt Capitation',amt:3500000,pct:28},
+            {cat:'Other Income',amt:620000,pct:5},
+          ].map(i=>`<div class="wi-row" style="padding:8px 0">
+            <span>${i.cat}</span>
+            <span class="mono" style="color:var(--green2)">${fmUGX(i.amt)}</span>
+          </div><div class="prog-bar" style="margin-bottom:8px"><div class="prog-fill" style="width:${i.pct}%"></div></div>`).join('')}
+        </div>
+      </div>
+      <div class="panel">
+        <div class="ph2"><div class="pt">📉 Expenditure Breakdown</div></div>
+        <div style="padding:16px">
+          ${[
+            {cat:'Staff Salaries',amt:12800000,pct:90,color:'var(--green)'},
+            {cat:'UNEB Fees',amt:980000,pct:7,color:'var(--amber)'},
+            {cat:'Utilities (UMEME/NWSC)',amt:525000,pct:4,color:'var(--blue)'},
+            {cat:'Stationery & Supplies',amt:456000,pct:3,color:'var(--purple)'},
+            {cat:'Maintenance',amt:620000,pct:4,color:'var(--red)'},
+          ].map(i=>`<div class="wi-row" style="padding:8px 0">
+            <span>${i.cat}</span>
+            <span class="mono" style="color:var(--red)">${fmUGX(i.amt)}</span>
+          </div><div class="prog-bar" style="margin-bottom:8px"><div class="prog-fill" style="width:${i.pct}%;background:${i.color}"></div></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function showTransModal(){
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">+ Record Transaction</div>
+    <div class="modal-sub">School financial ledger — Uganda Shillings (UGX)</div>
+    <div class="modal-grid">
+      <div class="fld"><label>Type</label><select><option>Income</option><option>Expense</option></select></div>
+      <div class="fld"><label>Date</label><input type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+      <div class="fld col-full"><label>Description</label><input placeholder="e.g. Term 2 Fees Collection Batch"></div>
+      <div class="fld"><label>Amount (UGX)</label><input type="number" placeholder="e.g. 5000000"></div>
+      <div class="fld"><label>Category</label>
+        <select><option>School Fees</option><option>Boarding</option><option>Government Grant</option><option>Salaries</option><option>Utilities</option><option>Examinations</option><option>Maintenance</option><option>Supplies</option><option>Other</option></select>
+      </div>
+      <div class="fld col-full"><label>Reference / Receipt No.</label><input placeholder="e.g. MP-BATCH-042025"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Transaction recorded','ok');this.closest('.modal-bg').remove()">✓ Save</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+// ── Inventory ─────────────────────────────────────────────────
+function renderInventory(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">📦 Inventory & Stores</div><div class="ph-sub">Stationery · Equipment · Science Lab · Sports · Books · ICT</div></div>
+      <div class="ph-actions">
+        <button class="btn btn-o" onclick="toast('Reorder items','info')">🔄 Reorder</button>
+        <button class="btn btn-g" onclick="showAddItem()">+ Add Item</button>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="sc"><div class="sc-l">Total Items</div><div class="sc-v">${DATA.inventory.length}</div></div>
+      <div class="sc"><div class="sc-l">Low Stock</div><div class="sc-v" style="color:var(--amber)">${DATA.inventory.filter(i=>i.qty<=i.reorder).length}</div><div class="sc-s">Below reorder level</div></div>
+      <div class="sc"><div class="sc-l">Total Value</div><div class="sc-v">${fmUGX(DATA.inventory.reduce((s,i)=>s+i.qty*i.cost_unit,0))}</div></div>
+    </div>
+    <div class="panel">
+      <div class="tbl-wrap">
+        <table><thead><tr><th>Item</th><th>Category</th><th>Qty</th><th>Unit</th><th>Reorder At</th><th>Status</th><th>Unit Cost (UGX)</th><th>Value (UGX)</th><th>Supplier</th><th>Last Restock</th></tr></thead>
+        <tbody>${DATA.inventory.map(i=>{
+          const low = i.qty<=i.reorder;
+          return `<tr>
+            <td style="font-weight:600">${i.item}</td>
+            <td style="font-size:11px;color:var(--chalk3)">${i.category}</td>
+            <td class="mono" style="color:${low?'var(--red)':'inherit'}">${i.qty}</td>
+            <td>${i.unit}</td>
+            <td class="mono">${i.reorder}</td>
+            <td>${low?'<span class="badge br">Low Stock</span>':'<span class="badge bg">OK</span>'}</td>
+            <td class="mono">${fm(i.cost_unit)}</td>
+            <td class="mono">${fm(i.qty*i.cost_unit)}</td>
+            <td style="font-size:11px;color:var(--chalk3)">${i.supplier}</td>
+            <td>${fd(i.last_restock)}</td>
+          </tr>`;
+        }).join('')}</tbody></table>
+      </div>
+    </div>
+  `;
+}
+
+function showAddItem(){
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">Add Inventory Item</div>
+    <div class="modal-grid">
+      <div class="fld col-full"><label>Item Name</label><input placeholder="e.g. Exercise Books A4 Ruled"></div>
+      <div class="fld"><label>Category</label>
+        <select><option>Stationery</option><option>Teaching Aids</option><option>Equipment</option><option>Science</option><option>Sports</option><option>Books</option><option>ICT</option></select>
+      </div>
+      <div class="fld"><label>Quantity</label><input type="number" placeholder="e.g. 500"></div>
+      <div class="fld"><label>Unit</label><input placeholder="e.g. pieces, reams, boxes"></div>
+      <div class="fld"><label>Unit Cost (UGX)</label><input type="number" placeholder="e.g. 800"></div>
+      <div class="fld"><label>Reorder Level</label><input type="number" placeholder="e.g. 100"></div>
+      <div class="fld col-full"><label>Supplier</label><input placeholder="e.g. Crane Stationery Kampala"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Item added to inventory','ok');this.closest('.modal-bg').remove()">✓ Add Item</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+// ── Notices ───────────────────────────────────────────────────
+function renderNotices(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">📢 Notices & Circulars</div><div class="ph-sub">School announcements · MoES Circulars · UNEB Updates · Parent Communications</div></div>
+      <div class="ph-actions"><button class="btn btn-g" onclick="showAddNotice()">+ New Notice</button></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      ${DATA.notices.slice(0,2).map(n=>`
+        <div class="panel" style="margin:0;border-color:${n.priority==='High'?'rgba(239,83,80,.3)':n.priority==='Medium'?'rgba(255,179,0,.2)':'var(--line)'}">
+          <div style="padding:16px 20px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">${sb(n.priority)}<span class="badge bc">${n.type}</span><span style="font-size:11px;color:var(--chalk3);margin-left:auto">${fd(n.date)}</span></div>
+            <div style="font-weight:700;font-size:15px;margin-bottom:8px">${n.title}</div>
+            <div style="font-size:13px;color:var(--chalk2);line-height:1.6">${n.body}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    ${DATA.notices.slice(2).map(n=>`
+      <div class="announce-card" style="border-color:${n.priority==='High'?'rgba(239,83,80,.25)':'var(--line2)'}">
+        <div class="ann-head"><span class="ann-type" style="color:var(--chalk3)">${n.type}</span>${sb(n.priority)}<span class="ann-date">${fd(n.date)}</span></div>
+        <div style="font-weight:700;margin-bottom:6px">${n.title}</div>
+        <div class="ann-body">${n.body}</div>
+      </div>
+    `).join('')}
+  `;
+}
+
+function showAddNotice(){
+  const modal = document.createElement('div');
+  modal.className = 'modal-bg';
+  modal.innerHTML = `<div class="modal">
+    <div class="modal-title">📢 New Notice / Circular</div>
+    <div class="modal-grid">
+      <div class="fld col-full"><label>Title</label><input placeholder="e.g. End of Term Examination Schedule"></div>
+      <div class="fld"><label>Type</label>
+        <select><option>Academic</option><option>Administrative</option><option>Examination</option><option>Sports</option><option>General</option><option>MoES Circular</option></select>
+      </div>
+      <div class="fld"><label>Priority</label><select><option>High</option><option>Medium</option><option>Low</option></select></div>
+      <div class="fld col-full"><label>Notice Body</label><textarea rows="5" placeholder="Write the notice / circular content…" style="width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);padding:12px;color:var(--chalk);font-size:14px;resize:vertical;outline:none"></textarea></div>
+      <div class="fld"><label>Post Date</label><input type="date" value="${new Date().toISOString().split('T')[0]}"></div>
+      <div class="fld"><label>Audience</label>
+        <select><option>All Staff & Students</option><option>Staff Only</option><option>Students Only</option><option>Parents</option><option>S.4 & S.6 Only</option></select>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-g" onclick="toast('Notice posted and SMS sent','ok');this.closest('.modal-bg').remove()">📢 Post Notice</button>
+      <button class="btn btn-o" onclick="toast('SMS sent to parents','ok');this.closest('.modal-bg').remove()">📱 SMS Parents</button>
+      <button class="btn btn-ghost" onclick="this.closest('.modal-bg').remove()">Cancel</button>
+    </div>
+  </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click',e=>{if(e.target===modal) modal.remove();});
+}
+
+function showQuickNotice(){ showAddNotice(); }
+
+// ── Timetable ─────────────────────────────────────────────────
+function renderTimetable(){
+  const periods = ['7:30–8:30','8:30–9:30','9:30–10:30','10:30–11:00','11:00–12:00','12:00–13:00','13:00–14:00','14:00–15:00'];
+  const days = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  const tt = [
+    [{s:'Maths',t:'Kiggundu',c:'math'},{s:'English',t:'Nalwanga',c:'eng'},{s:'Physics',t:'Byaruhanga',c:'sci'},{s:'History',t:'Achieng',c:'sst'},{s:'Biology',t:'Muthama',c:'sci'}],
+    [{s:'English',t:'Nalwanga',c:'eng'},{s:'Physics',t:'Byaruhanga',c:'sci'},{s:'Maths',t:'Kiggundu',c:'math'},{s:'CRE',t:'Achieng',c:'sst'},{s:'Chemistry',t:'Muthama',c:'sci'}],
+    [null,null,null,null,null],// break
+    [{s:'ICT',t:'Ssemanda',c:'ict'},{s:'Geo',t:'Mwangi',c:'sst'},{s:'ICT',t:'Ssemanda',c:'ict'},{s:'Maths',t:'Kiggundu',c:'math'},{s:'English',t:'Nalwanga',c:'eng'}],
+    [{s:'History',t:'Achieng',c:'sst'},{s:'Biology',t:'Muthama',c:'sci'},{s:'English',t:'Nalwanga',c:'eng'},{s:'Physics',t:'Byaruhanga',c:'sci'},{s:'Maths',t:'Kiggundu',c:'math'}],
+    [{s:'Maths',t:'Kiggundu',c:'math'},{s:'ICT',t:'Ssemanda',c:'ict'},{s:'Geo',t:'Mwangi',c:'sst'},{s:'Biology',t:'Muthama',c:'sci'},{s:'Chemistry',t:'Muthama',c:'sci'}],
+    [null,null,null,null,null],// lunch
+    [{s:'Geo',t:'Mwangi',c:'sst'},{s:'Maths',t:'Kiggundu',c:'math'},{s:'Chemistry',t:'Muthama',c:'sci'},{s:'ICT',t:'Ssemanda',c:'ict'},{s:'History',t:'Achieng',c:'sst'}],
+  ];
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">🗓️ School Timetable</div><div class="ph-sub">Term 2, 2025 · S.4A Sciences Stream · 40-minute periods</div></div>
+      <div class="ph-actions">
+        <select style="padding:8px 12px;border-radius:var(--r);background:var(--bg3);color:var(--chalk);border:1px solid var(--line);font-size:13px">
+          ${DATA.classes.map(c=>`<option>${c.name} — ${c.stream}</option>`).join('')}
+        </select>
+        <button class="btn btn-g" onclick="toast('Timetable exported to PDF','ok')">🖨️ Print</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div style="padding:16px;overflow-x:auto">
+        <div class="tt-grid">
+          <div class="tt-head">Period</div>
+          ${days.map(d=>`<div class="tt-head">${d}</div>`).join('')}
+          ${periods.map((p,pi)=>{
+            const row = tt[pi];
+            const isBreak = pi===2;
+            const isLunch = pi===6;
+            if(isBreak) return `<div class="tt-head" style="color:var(--amber)">${p}</div>${days.map(()=>'<div class="tt-cell break" style="background:var(--amber-t);border-color:rgba(255,179,0,.2)"><div class="tt-subj" style="color:var(--amber)">BREAK</div></div>').join('')}`;
+            if(isLunch) return `<div class="tt-head" style="color:var(--teal)">${p}</div>${days.map(()=>'<div class="tt-cell break" style="background:var(--teal-t);border-color:rgba(38,198,218,.2)"><div class="tt-subj" style="color:var(--teal)">LUNCH</div></div>').join('')}`;
+            return `<div class="tt-head" style="font-size:9px">${p}</div>${row.map(c=>c?`<div class="tt-cell ${c.c}"><div class="tt-subj">${c.s}</div><div class="tt-teacher">${c.t}</div></div>`:'<div class="tt-cell"></div>').join('')}`;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;padding:0 4px 16px">
+      ${[['math','var(--blue-t)','rgba(66,165,245,.3)','var(--blue)','Mathematics'],
+         ['sci','var(--green-t)','rgba(76,175,80,.3)','var(--green2)','Sciences'],
+         ['eng','var(--purple-t)','rgba(171,71,188,.3)','var(--purple)','English'],
+         ['sst','var(--amber-t)','rgba(255,179,0,.3)','var(--amber)','SST / History'],
+         ['ict','var(--teal-t)','rgba(38,198,218,.3)','var(--teal)','ICT']].map(([,,, c, l])=>`
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:${c}"><span style="width:10px;height:10px;border-radius:2px;background:${c};display:inline-block;opacity:.7"></span>${l}</span>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ── Reports ───────────────────────────────────────────────────
+function renderReports(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">📋 Reports & Analytics</div><div class="ph-sub">Academic · Financial · Enrolment · UNEB · MoES Compliance</div></div>
+      <div class="ph-actions"><button class="btn btn-g" onclick="toast('Generating report…','ok')">📥 Generate Report</button></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
+      ${[
+        {icon:'📊',title:'Academic Performance Report',desc:'By class, subject, stream · Grade distribution · UNEB readiness · Term comparison',badge:'Academic'},
+        {icon:'💰',title:'Fee Collection Report',desc:'Collection rate by class · Defaulters list · Payment method analysis · M-Pesa / Airtel breakdown',badge:'Finance'},
+        {icon:'👩‍🎓',title:'Enrolment Statistics',desc:'By gender, district, stream, boarding status · Term-on-term growth · Capacity analysis',badge:'Admin'},
+        {icon:'👔',title:'Staff & Payroll Report',desc:'Headcount · NSSF deductions · PAYE · Teacher-Student ratio · Leave utilisation',badge:'HR'},
+        {icon:'🎓',title:'UNEB Candidates Report',desc:'UCE & UACE registration · Payment status · Subject combinations · Mock vs target',badge:'UNEB'},
+        {icon:'🏛️',title:'MoES Annual School Census',desc:'Uganda Ministry of Education statutory reporting · Annual school census data',badge:'Govt'},
+        {icon:'📦',title:'Inventory Utilisation Report',desc:'Stock levels · Low stock alerts · Expenditure by category · Reorder recommendations',badge:'Stores'},
+        {icon:'🌍',title:'Cross-Country Comparison',desc:'Uganda · Kenya · Tanzania · Rwanda · Curriculum alignment · Fee benchmarking',badge:'EA Region'},
+      ].map(r=>`
+        <div class="panel" style="margin:0;cursor:pointer;transition:border-color .2s" onmouseenter="this.style.borderColor='var(--line2)'" onmouseleave="this.style.borderColor='var(--line)'" onclick="toast('Generating ${r.title}…','ok')">
+          <div style="padding:20px">
+            <div style="font-size:32px;margin-bottom:10px">${r.icon}</div>
+            <div style="font-weight:700;font-size:14px;margin-bottom:6px">${r.title}</div>
+            <div style="font-size:12px;color:var(--chalk3);line-height:1.5;margin-bottom:12px">${r.desc}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span class="badge bl2">${r.badge}</span>
+              <button class="btn btn-ghost btn-sm">Generate →</button>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ── Settings ──────────────────────────────────────────────────
+function renderSettings(){
+  document.getElementById('module-container').innerHTML = `
+    <div class="ph" style="background:var(--bg2);border:1px solid var(--line);border-radius:var(--r2);margin-bottom:16px;">
+      <div><div class="ph-title">⚙️ System Settings</div><div class="ph-sub">School Profile · Terms · Currencies · SMS · Supabase Connection</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="panel" style="margin:0">
+        <div class="ph2"><div class="pt">🏫 School Profile</div></div>
+        <div style="padding:20px">
+          <div class="fld"><label>School Name</label><input value="St. Mary's College Kampala"></div>
+          <div class="fld"><label>Country</label>
+            <select><option>🇺🇬 Uganda</option><option>🇰🇪 Kenya</option><option>🇹🇿 Tanzania</option><option>🇷🇼 Rwanda</option><option>🇧🇮 Burundi</option></select>
+          </div>
+          <div class="fld"><label>Currency</label>
+            <select><option>UGX — Uganda Shillings</option><option>KES — Kenya Shillings</option><option>TZS — Tanzania Shillings</option><option>RWF — Rwanda Franc</option></select>
+          </div>
+          <div class="fld"><label>Exam Board</label>
+            <select><option>UNEB — Uganda</option><option>KNEC — Kenya</option><option>NECTA — Tanzania</option><option>REB — Rwanda</option></select>
+          </div>
+          <div class="fld"><label>School Type</label>
+            <select><option>Secondary (O-Level & A-Level)</option><option>Primary (P.1–P.7)</option><option>Combined (Primary & Secondary)</option><option>Technical/Vocational</option></select>
+          </div>
+          <button class="btn btn-g" onclick="toast('Settings saved','ok')">✓ Save Profile</button>
+        </div>
+      </div>
+      <div class="panel" style="margin:0">
+        <div class="ph2"><div class="pt">📅 Academic Calendar</div></div>
+        <div style="padding:20px">
+          <div class="fld"><label>Current Term</label>
+            <select><option>Term 1 (Feb–April)</option><option selected>Term 2 (May–August)</option><option>Term 3 (Sept–Dec)</option></select>
+          </div>
+          <div class="fld"><label>Academic Year</label><input value="2025"></div>
+          <div class="fld"><label>Term 2 Start</label><input type="date" value="2025-05-12"></div>
+          <div class="fld"><label>Term 2 End</label><input type="date" value="2025-08-08"></div>
+          <button class="btn btn-g" onclick="toast('Calendar updated','ok')">✓ Update Calendar</button>
+        </div>
+      </div>
+      <div class="panel" style="margin:0">
+        <div class="ph2"><div class="pt">📱 SMS & Notifications</div></div>
+        <div style="padding:20px">
+          <div class="fld"><label>SMS Provider</label>
+            <select><option>Africa's Talking</option><option>Twilio</option><option>MTN Uganda Business</option><option>Safaricom SMS</option></select>
+          </div>
+          <div class="fld"><label>API Key</label><input type="password" placeholder="••••••••••••••••"></div>
+          <div class="fld"><label>Sender ID</label><input placeholder="e.g. SCHOOL or +256700000000"></div>
+          <div style="background:var(--green-g);border:1px solid var(--line2);border-radius:var(--r);padding:12px;font-size:12px;color:var(--chalk2);margin-bottom:14px">
+            ✅ SMS sent automatically for: Fee reminders · Exam results · Notices · Parent reports
+          </div>
+          <button class="btn btn-g" onclick="toast('Test SMS sent','ok')">🧪 Send Test SMS</button>
+        </div>
+      </div>
+      <div class="panel" style="margin:0">
+        <div class="ph2"><div class="pt">🔌 Database Connection</div></div>
+        <div style="padding:20px">
+          <div class="fld"><label>Supabase Project URL</label><input placeholder="https://xxxx.supabase.co"></div>
+          <div class="fld"><label>Supabase Anon Key</label><input type="password" placeholder="eyJhbGciOiJIUzI1NiIs…"></div>
+          <div style="background:var(--blue-t);border:1px solid rgba(66,165,245,.2);border-radius:var(--r);padding:12px;font-size:12px;color:var(--blue);margin-bottom:14px">
+            ℹ️ Currently running in DEMO mode with sample data. Connect Supabase to enable live data, multi-user access, and real-time sync.
+          </div>
+          <button class="btn btn-g" onclick="toast('Testing connection…','info')">🔌 Test & Connect</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Init ──────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', ()=>{
+  // Show login screen
+  document.getElementById('sAuth').style.display = 'flex';
+  document.getElementById('sAuth').classList.add('on');
+});
+</script>
+</body>
+</html>
